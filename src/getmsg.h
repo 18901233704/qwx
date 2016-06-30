@@ -3,8 +3,31 @@
 #ifndef GET_MSG_H
 #define GET_MSG_H
 
+#include <QThread>
+
 #include "httppost.h"
 #include "download.h"
+
+class GetMsgResThread : public QThread
+{
+    Q_OBJECT
+
+public:
+    GetMsgResThread(QString url, QString resPath)
+      : m_url(url),
+        m_resPath(resPath)
+    {
+    }
+
+protected:
+    void run()
+    {
+    }
+
+private:
+    QString m_url;
+    QString m_resPath;
+};
 
 class GetMsg : public HttpPost 
 {

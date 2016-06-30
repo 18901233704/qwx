@@ -153,6 +153,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 });
                 break;
             }
+            continue;
         }
 
         if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr)) {
