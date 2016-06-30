@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QJsonDocument>                                                           
@@ -10,10 +10,7 @@
 #include "globaldeclarations.h"
 
 GetMsg::GetMsg(HttpPost* parent) 
-  : HttpPost(parent), 
-    m_fromUserName(""), 
-    m_toUserName(""),
-    m_needSaveLog(true)
+  : HttpPost(parent)
 {
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
@@ -57,9 +54,10 @@ void GetMsg::m_post(QString host,
                     QString skey, 
                     QStringList syncKey) 
 {
+    m_skey = skey;
     QString ts = QString::number(time(NULL));
     QString url = host + WX_CGI_PATH + "webwxsync?sid=" + sid + 
-        "&skey=" + skey + "&r=" + ts;
+        "&skey=" + m_skey + "&r=" + ts;
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
@@ -139,15 +137,21 @@ void GetMsg::finished(QNetworkReply* reply)
         QString fromUserNameStr = msg["FromUserName"].toString();
         QString toUserNameStr = msg["ToUserName"].toString();
         QString createTimeStr = QString::number(msg["CreateTime"].toInt());
-        QString content = msg["Content"] .toString();
-       
+        QString content = msg["Content"].toString();
+        QString msgId = msg["MsgId"].toString();
+
         if (content.contains("msg")) {
-            if (content.contains("img")) {
-                content = tr("Please view the photo on your phone");
-            } else if (content.contains("appmsg")) {
-                content = tr("Please view the App message on your phone");
-            } else {
-                continue;
+            switch (msg["MsgType"].toInt()) {
+            case 3:
+                // TODO: it needs to consider about V2 protocol
+                QString url = WX_SERVER_HOST + WX_CGI_PATH +
+                    "webwxgetmsgimg?MsgID=" + msgId + "&skey=" + m_skey;
+                QString msgImgPath = QWXDIR + "/img_" + msgId + ".jpg";
+                m_downLoad.get(url, msgImgPath);
+                m_connection = connect(&m_downLoad, &Download::finished, [this] {
+                    disconnect(m_connection);
+                });
+                break;
             }
         }
 

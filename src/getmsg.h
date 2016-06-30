@@ -1,9 +1,10 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef GET_MSG_H
 #define GET_MSG_H
 
 #include "httppost.h"
+#include "download.h"
 
 class GetMsg : public HttpPost 
 {
@@ -62,11 +63,14 @@ private:
                 QStringList syncKey);
 
 private:
-    QString m_fromUserName;
-    QString m_toUserName;
+    QString m_fromUserName = "";
+    QString m_toUserName = "";
     QMap<QString, int> m_map;
     QStringList m_syncKey;
-    bool m_needSaveLog;
+    bool m_needSaveLog = true;
+    QString m_skey = "";
+    Download m_downLoad;
+    QMetaObject::Connection m_connection;
 };
 
 #endif // GET_MSG_H

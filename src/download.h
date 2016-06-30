@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef DOWNLOAD_H
 #define DOWNLOAD_H
@@ -22,6 +22,7 @@ public:
 Q_SIGNALS:
     void downloaded(qreal progress);
     void finished();
+    void error();
 
 private:
     QNetworkAccessManager m_nam;

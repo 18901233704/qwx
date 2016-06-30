@@ -21,7 +21,7 @@ sudo apt-get install qtdeclarative5-dev qt5-default qt5-qmake qml-module-qtquick
 
 mkdir build
 cd build
-qtchooser -run-tool=qmake -qt=qt5 ..
+qtchooser -run-tool=qmake QWX_DEBUG=ON -qt=qt5 ..
 make
 ./qwx
 

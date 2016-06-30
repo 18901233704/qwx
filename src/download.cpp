@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QDir>
@@ -46,7 +46,13 @@ void Download::get(QString url, QString filePath)
             });
     
     m_reply = m_nam.get(request);
-    
+
+    connect(m_reply,
+            static_cast<void(QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error),
+            [this](QNetworkReply::NetworkError code) {
+                Q_UNUSED(code);
+                Q_EMIT error();
+            });
     m_downloadProgressConnection = connect(m_reply, &QNetworkReply::downloadProgress, 
             [this](qint64 bytesReceived, qint64 bytesTotal) {
                 if (bytesTotal)
