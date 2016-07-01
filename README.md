@@ -21,17 +21,17 @@ sudo apt-get install qtdeclarative5-dev qt5-default qt5-qmake qml-module-qtquick
 
 mkdir build
 cd build
-qtchooser -run-tool=qmake QWX_DEBUG=ON -qt=qt5 ..
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
+    -DCMAKE_BUILD_TYPE=Debug
 make
-./qwx
+./src/qwx
 
 ```
 
 ## i18n
 
 ```
-lupdate src/*.cpp qml/*.qml -ts translations/qwx_zh_CN.ts
-lrelease translations/qwx_zh_CN.ts
+lupdate src/*.cpp qml/*.qml -ts translations/zh_CN.ts
 ```
 
 ## 小逗比机器人
