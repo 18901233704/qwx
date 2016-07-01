@@ -92,7 +92,10 @@ void GetMsg::postV2(QString uin, QString sid, QString skey, QStringList syncKey)
 QString GetMsg::contentWithoutUserName(QString content) 
 {
     if (content.startsWith("@"))
-        return content.mid(content.indexOf(":<br/>") + QString(":<br/>").size());
+        content = content.mid(content.indexOf(":<br/>") + QString(":<br/>").size());
+
+    if (content.contains("<img src="))
+        content = tr("[Picture]");
 
     return content;
 }
@@ -185,8 +188,8 @@ void GetMsg::finished(QNetworkReply* reply)
                 downLoad->get(url, msgImgPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
                     content = "<img src=\"file://" + msgImgPath +
-                        "\" height=\"100\">";
-                    m_handleNewMsg(content, fromUserNameStr, toUserNameStr, createTime);
+                        "\" width=\"128\" height=\"128\">";
+                    m_handleNewMsg(content, fromUserNameStr, toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                     qWarning() << "WARNING:" << __PRETTY_FUNCTION__ << msgId << m_skey;
                 });

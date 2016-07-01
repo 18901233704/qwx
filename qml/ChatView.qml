@@ -67,7 +67,7 @@ Rectangle {
 		id: getMsgObj
 		fromUserName: chatView.fromUserName
 		toUserName: chatView.toUserName
-		needSaveLog: false
+		needSaveLog: true
 		onNoNewMsg: {
 			rootWindow.title = qsTr("WeChat Qt frontend")
 		}
