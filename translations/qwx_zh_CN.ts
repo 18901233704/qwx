@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>WeChat Qt frontend</source>
-        <translation type="unfinished">微信Qt前端</translation>
+        <translation type="unfinished">微信 Qt 前端</translation>
     </message>
     <message>
         <source>New message</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Please view the App message on your phone</source>
-        <translation type="unfinished">请在您手机上查看App信息</translation>
+        <translation type="unfinished">请在您手机上查看 App 信息</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>Loading QRcode ...</source>
-        <translation type="unfinished">加载二维码中...</translation>
+        <translation type="unfinished">加载二维码中……</translation>
     </message>
     <message>
         <source>Please confirm on your mobile</source>
@@ -69,7 +69,7 @@
     </message>
     <message>
         <source>WeChat Qt frontend</source>
-        <translation type="unfinished">微信Qt前端</translation>
+        <translation type="unfinished">微信 Qt 前端</translation>
     </message>
     <message>
         <source>WeChat</source>
@@ -92,7 +92,7 @@
     <name>WXView</name>
     <message>
         <source>WeChat Qt frontend</source>
-        <translation type="unfinished">微信Qt前端</translation>
+        <translation type="unfinished">微信 Qt 前端</translation>
     </message>
     <message>
         <source>Disconnected! Please login again</source>
@@ -107,7 +107,7 @@
     <name>main</name>
     <message>
         <source>WeChat Qt frontend</source>
-        <translation type="unfinished">微信Qt前端</translation>
+        <translation type="unfinished">微信 Qt 前端</translation>
     </message>
 </context>
 </TS>
