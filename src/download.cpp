@@ -22,13 +22,16 @@ Download::~Download()
 #endif
 }
 
-void Download::get(QString url, QString filePath) 
+void Download::get(QString url, QString filePath, bool needCookie, bool isAppend)
 {
+    if (!isAppend && QFile::exists(filePath))
+        return;
+
     QNetworkRequest request(url);
     QFile file(QWXDIR + "/" + COOKIE_FILENAME);
 
     // webwx download file need cookie
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {                    
+    if (needCookie && file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream out(&file);                                                
         QList<QNetworkCookie> cookies = QNetworkCookie::parseCookies(
             out.readAll().toUtf8());
@@ -38,7 +41,9 @@ void Download::get(QString url, QString filePath)
     }
 
     m_file.setFileName(filePath);
-    m_file.open(QIODevice::WriteOnly | QIODevice::Append);
+    m_file.open(isAppend ?
+                QIODevice::WriteOnly | QIODevice::Append :
+                QIODevice::WriteOnly);
     
     m_sslErrorConnection = connect(&m_nam, &QNetworkAccessManager::sslErrors, 
             [this](QNetworkReply* reply, const QList<QSslError> & errors) {
@@ -58,14 +63,25 @@ void Download::get(QString url, QString filePath)
                 if (bytesTotal)
                     Q_EMIT downloaded(bytesReceived / bytesTotal);
             });
-    m_readyReadConnection = connect(m_reply, &QNetworkReply::readyRead, 
+    if (isAppend) {
+        m_readyReadConnection = connect(m_reply, &QNetworkReply::readyRead,
             [this] {
                 m_file.write(m_reply->readAll());
                 m_file.flush();
             });
-    m_finishConnection = connect(&m_nam, &QNetworkAccessManager::finished, 
-            [this] {
+    } else {
+        connect(m_reply, &QNetworkReply::finished, [this] {
+                m_file.write(m_reply->readAll());
+                m_file.flush();
+                m_file.close();
                 Q_EMIT finished();
+            });
+    }
+    m_finishConnection = connect(&m_nam, &QNetworkAccessManager::finished,
+            [=] {
+                if (isAppend)
+                    Q_EMIT finished();
+
                 disconnect(m_downloadProgressConnection);
                 disconnect(m_readyReadConnection);
                 disconnect(m_sslErrorConnection);

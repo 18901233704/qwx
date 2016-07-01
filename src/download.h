@@ -17,7 +17,10 @@ public:
     Download(QObject* parent = nullptr);
     ~Download();
 
-    void get(QString url, QString filePath);
+    void get(QString url,
+             QString filePath,
+             bool needCookie = true,
+             bool isApped = true);
 
 Q_SIGNALS:
     void downloaded(qreal progress);

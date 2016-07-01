@@ -2,7 +2,7 @@ qwx
 ----
 
 WeChat Qt frontend based on [webwx protocol] (https://github.com/xiangzhai/qwx/blob/master/doc/protocol.md) 
-微信Qt前端，使用[网页微信协议] (https://github.com/xiangzhai/qwx/blob/master/doc/protocol.md)
+微信Qt前端，使用[网页微信协议] (https://github.com/xiangzhai/qwx/blob/master/doc/protocol.md) 更多扩展协议支持，请阅读[WeixinBot相关代码] (https://github.com/Urinx/WeixinBot/blob/master/weixin.py#L540)
 
 ***images and protocol Copyright (C) by [Tencent] (http://weixin.qq.com/)*** 
 ***图片、协议版权归[腾讯] (http://weixin.qq.com/) 所有！***

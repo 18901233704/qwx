@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "getmsg.h"
+#include "download.h"
 #include "globaldeclarations.h"
 
 GetMsg::GetMsg(HttpPost* parent) 
@@ -84,6 +85,7 @@ void GetMsg::post(QString uin, QString sid, QString skey, QStringList syncKey)
 
 void GetMsg::postV2(QString uin, QString sid, QString skey, QStringList syncKey)
 {
+    m_v2 = true;
     m_post(WX_V2_SERVER_HOST, uin, sid, skey, syncKey);
 }
 
@@ -113,6 +115,37 @@ void GetMsg::m_saveLog(QString createTimeStr, QString fromUserName, QString cont
     }
 }
 
+void GetMsg::m_handleNewMsg(QString content,
+                            QString fromUserNameStr,
+                            QString toUserNameStr,
+                            int createTime)
+{
+    QString createTimeStr = QString::number(createTime);
+
+    if (content.isEmpty())
+        return;
+
+    if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr)) {
+        if (m_needSaveLog)
+            m_saveLog(createTimeStr, fromUserNameStr, content);
+
+        Q_EMIT newMsg(content, fromUserNameStr, toUserNameStr);
+    }
+
+    if ((fromUserNameStr == m_fromUserName && toUserNameStr == m_toUserName) ||
+        (fromUserNameStr == m_toUserName && toUserNameStr == m_fromUserName)) {
+        if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr))
+            Q_EMIT received(content, fromUserNameStr);
+    }
+
+    if (m_map.size() > 64) {
+        while (m_map.size() > 64 / 2)
+            m_map.erase(m_map.begin());
+    }
+
+    m_map.insert(fromUserNameStr + toUserNameStr + createTimeStr, createTime);
+}
+
 void GetMsg::finished(QNetworkReply* reply) 
 {
     QString replyStr = QString(reply->readAll());
@@ -136,47 +169,35 @@ void GetMsg::finished(QNetworkReply* reply)
         QJsonObject msg = val.toObject();
         QString fromUserNameStr = msg["FromUserName"].toString();
         QString toUserNameStr = msg["ToUserName"].toString();
-        QString createTimeStr = QString::number(msg["CreateTime"].toInt());
+        int createTime = msg["CreateTime"].toInt();
         QString content = msg["Content"].toString();
         QString msgId = msg["MsgId"].toString();
+        int msgType = msg["MsgType"].toInt();
 
         if (content.contains("msg")) {
-            switch (msg["MsgType"].toInt()) {
-            case 3:
-                // TODO: it needs to consider about V2 protocol
-                QString url = WX_SERVER_HOST + WX_CGI_PATH +
-                    "webwxgetmsgimg?MsgID=" + msgId + "&skey=" + m_skey;
+            content = "";
+            if (msgType == 3) {
+                QString url = m_v2 ? WX_V2_SERVER_HOST : WX_SERVER_HOST +
+                    WX_CGI_PATH + "webwxgetmsgimg?MsgID=" + msgId + "&skey=" +
+                    m_skey;
                 QString msgImgPath = QWXDIR + "/img_" + msgId + ".jpg";
-                m_downLoad.get(url, msgImgPath);
-                m_connection = connect(&m_downLoad, &Download::finished, [this] {
-                    disconnect(m_connection);
+                Download *downLoad = new Download;
+                downLoad->get(url, msgImgPath, true, false);
+                connect(downLoad, &Download::finished, [=] {
+                    content = "<img src=\"file://" + msgImgPath +
+                        "\" height=\"100\">";
+                    m_handleNewMsg(content, fromUserNameStr, toUserNameStr, createTime);
+                    downLoad->deleteLater();
+                    qWarning() << "WARNING:" << __PRETTY_FUNCTION__ << msgId << m_skey;
                 });
-                break;
-            }
-            continue;
-        }
-
-        if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr)) {
-            if (m_needSaveLog)
-                m_saveLog(createTimeStr, fromUserNameStr, content);
-
-            Q_EMIT newMsg(content, fromUserNameStr, toUserNameStr);
-        }
-        
-        if ((fromUserNameStr == m_fromUserName && toUserNameStr == m_toUserName) || 
-            (fromUserNameStr == m_toUserName && toUserNameStr == m_fromUserName)) {
-            if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr)) {
-                Q_EMIT received(content, fromUserNameStr);
+            } else if (msgType == 51) {
+                // TODO: you are tapping on your phone ;-)
+            } else {
+                content = tr("Unsupport MsgType %1").arg(msgType);
             }
         }
 
-        if (m_map.size() > 64) {
-            while (m_map.size() > 64 / 2)
-                m_map.erase(m_map.begin());
-        }
-
-        m_map.insert(fromUserNameStr + toUserNameStr + createTimeStr, 
-                     msg["CreateTime"].toInt());
+        m_handleNewMsg(content, fromUserNameStr, toUserNameStr, createTime);
     }
     
     m_syncKey.clear();

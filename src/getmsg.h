@@ -3,31 +3,7 @@
 #ifndef GET_MSG_H
 #define GET_MSG_H
 
-#include <QThread>
-
 #include "httppost.h"
-#include "download.h"
-
-class GetMsgResThread : public QThread
-{
-    Q_OBJECT
-
-public:
-    GetMsgResThread(QString url, QString resPath)
-      : m_url(url),
-        m_resPath(resPath)
-    {
-    }
-
-protected:
-    void run()
-    {
-    }
-
-private:
-    QString m_url;
-    QString m_resPath;
-};
 
 class GetMsg : public HttpPost 
 {
@@ -84,6 +60,10 @@ private:
                 QString sid, 
                 QString skey, 
                 QStringList syncKey);
+    void m_handleNewMsg(QString content,
+                        QString fromUserNameStr,
+                        QString toUserNameStr,
+                        int createTime);
 
 private:
     QString m_fromUserName = "";
@@ -91,9 +71,8 @@ private:
     QMap<QString, int> m_map;
     QStringList m_syncKey;
     bool m_needSaveLog = true;
+    bool m_v2 = false;
     QString m_skey = "";
-    Download m_downLoad;
-    QMetaObject::Connection m_connection;
 };
 
 #endif // GET_MSG_H
