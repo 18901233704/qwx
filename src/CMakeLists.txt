@@ -45,6 +45,4 @@ target_link_libraries(qwx
     Qt5::Xml
 )
 
-add_dependencies(qwx translation)
-
 install(TARGETS qwx RUNTIME DESTINATION bin)
