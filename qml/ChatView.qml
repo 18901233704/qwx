@@ -14,7 +14,8 @@ Rectangle {
 	property string toUserName
 	property string toNickName
 	property bool showEmotion: false
-	property var toUserList
+    property bool showPlus: false
+    property var toUserList
 
 	function moveToTheEnd() {
 		chatListView.positionViewAtEnd()
@@ -351,8 +352,6 @@ Rectangle {
 				anchors.fill: parent
 				color: "white"
 
-				//					border.color: "black"
-				//					border.width: 3
 				AnimatedImage {
 					source: "../images/" + name
 					width: 24
@@ -369,6 +368,49 @@ Rectangle {
 						}
 					}
 				}
+			}
+		}
+		z: 1
+	}
+
+    ListModel {
+        id: plusModel
+
+        ListElement { name: "image"; icon: "../images/image.png"; title: qsTr("Image") }
+        ListElement { name: "video"; icon: "../images/video.png"; title: qsTr("Video") }
+    }
+
+	GridView {
+		id: plusGridView
+		model: plusModel
+		width: chatView.width
+		height: 168
+		anchors.bottom: inputRect.top
+		cellWidth: 70
+		cellHeight: 70
+		anchors.horizontalCenter: parent.horizontalCenter
+		focus: true
+		visible: false
+		clip: true
+
+		delegate: Item {
+			width: parent.width
+			height: parent.height
+
+			Rectangle {
+				anchors.fill: parent
+				color: "white"
+
+                Image {
+                    id: plusCategoryImage
+                    source: icon
+                }
+
+                Text {
+                    anchors.top: plusCategoryImage.bottom
+                    anchors.horizontalCenter: plusCategoryImage.horizontalCenter
+                    text: title
+                }
 			}
 		}
 		z: 1
@@ -403,7 +445,10 @@ Rectangle {
 				anchors.right: emotionImage.left
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.rightMargin: 4
-				onAccepted: {
+                onTextChanged: {
+                    sendButton.visible = this.text.length ? true : false;
+                }
+                onAccepted: {
 					sendMsg()
 				}
 			}
@@ -420,17 +465,48 @@ Rectangle {
 				MouseArea {
 					anchors.fill: parent
 					onClicked: {
-						chatView.showEmotion = !chatView.showEmotion
-						emotionGridView.visible = chatView.showEmotion
+						chatView.showEmotion = !chatView.showEmotion;
+						emotionGridView.visible = chatView.showEmotion;
 					}
 				}
 			}
 
+            Button {
+                id: plusButton
+                text: "+"
+                visible: true
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                style: ButtonStyle {
+            		background: Rectangle {
+                        implicitWidth: 28
+                        implicitHeight: 28
+                        border.width: 1
+                        border.color: "#727272"
+                        radius: 14
+                    }
+        		}
+                onClicked: {
+                    chatView.showPlus = !chatView.showPlus;
+                    plusGridView.visible = chatView.showPlus;
+                }
+            }
+
 			Button {
 				id: sendButton
-				text: qsTr("Send")
+                text: qsTr("Send")
+                visible: false
 				anchors.right: parent.right
-				anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                style: ButtonStyle {
+                    background: Rectangle {
+                        implicitWidth: 30
+                        implicitHeight: 28
+                        border.width: 1
+                        border.color: "#3a8e38"
+                        color: "#19ad1b"
+                    }
+                }
 				onClicked: {
 					emotionGridView.visible = false
 					sendMsg()

@@ -1,7 +1,11 @@
 *.pro.user
+*.qm
+*.moc
 moc_*
 qrc_*
 Makefile
+build
+*.json
 
 # Compiled Object files
 *.slo
