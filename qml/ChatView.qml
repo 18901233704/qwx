@@ -446,7 +446,9 @@ Rectangle {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.rightMargin: 4
                 onTextChanged: {
-                    sendButton.visible = this.text.length ? true : false;
+                    // TODO: sendImg have not been implemented yet, so just 
+                    // hide plusButton now
+                    //sendButton.visible = this.text.length ? true : false;
                 }
                 onAccepted: {
 					sendMsg()
@@ -474,7 +476,7 @@ Rectangle {
             Button {
                 id: plusButton
                 text: "+"
-                visible: true
+                visible: false
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 style: ButtonStyle {
@@ -495,7 +497,7 @@ Rectangle {
 			Button {
 				id: sendButton
                 text: qsTr("Send")
-                visible: false
+                visible: true
 				anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 style: ButtonStyle {
