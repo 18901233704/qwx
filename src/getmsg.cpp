@@ -4,6 +4,7 @@
 #include <QJsonDocument>                                                           
 #include <QJsonObject>                                                             
 #include <QJsonArray>
+#include <QStandardPaths>
 #include <time.h>
 
 #include "getmsg.h"
@@ -183,7 +184,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 QString url = m_v2 ? WX_V2_SERVER_HOST : WX_SERVER_HOST +
                     WX_CGI_PATH + "webwxgetmsgimg?MsgID=" + msgId + "&skey=" +
                     m_skey;
-                QString msgImgPath = QWXDIR + "/img_" + msgId + ".jpg";
+                QString msgImgPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation) + "/img_" + msgId + ".jpg";
                 Download *downLoad = new Download;
                 downLoad->get(url, msgImgPath, true, false);
                 connect(downLoad, &Download::finished, [=] {

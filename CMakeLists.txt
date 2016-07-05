@@ -42,7 +42,7 @@ if(NOT DEFINED CMAKE_INSTALL_LOCALSTATEDIR)
     set(CMAKE_INSTALL_LOCALSTATEDIR "/var")
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools Widgets Qml Quick Network Xml)
+find_package(Qt5 REQUIRED COMPONENTS Core LinguistTools Widgets Qml Quick Network Xml)
 
 include(FeatureSummary)
 
