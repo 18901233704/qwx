@@ -50,8 +50,8 @@ void HeadImg::setHeadImgUrl(const QString & headImgUrl)
 void HeadImg::m_get(QString host) 
 {
     QString url = host + (m_headImgUrl.contains("webwxgeticon") ? 
-        WX_CGI_PATH + "webwxgeticon?seq=1388335457&username=" + m_userName : 
-        WX_CGI_PATH + "webwxgetheadimg??seq=1388335457&username=" + m_userName);
+        WX_CGI_PATH + "webwxgeticon?username=" + m_userName :
+        WX_CGI_PATH + "webwxgetheadimg?username=" + m_userName);
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
