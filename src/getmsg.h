@@ -60,7 +60,8 @@ private:
                 QString sid, 
                 QString skey, 
                 QStringList syncKey);
-    void m_handleNewMsg(QString content,
+    void m_handleNewMsg(QString msgId,
+                        QString content,
                         QString fromUserNameStr,
                         QString toUserNameStr,
                         int createTime);

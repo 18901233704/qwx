@@ -119,17 +119,18 @@ void GetMsg::m_saveLog(QString createTimeStr, QString fromUserName, QString cont
     }
 }
 
-void GetMsg::m_handleNewMsg(QString content,
+void GetMsg::m_handleNewMsg(QString msgId,
+                            QString content,
                             QString fromUserNameStr,
                             QString toUserNameStr,
                             int createTime)
 {
-    QString createTimeStr = QString::number(createTime);
-
-    if (content.isEmpty())
+    if (msgId.isEmpty() || content.isEmpty())
         return;
 
-    if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr)) {
+    QString createTimeStr = QString::number(createTime);
+
+    if (!m_map.contains(msgId)) {
         if (m_needSaveLog)
             m_saveLog(createTimeStr, fromUserNameStr, content);
 
@@ -138,7 +139,7 @@ void GetMsg::m_handleNewMsg(QString content,
 
     if ((fromUserNameStr == m_fromUserName && toUserNameStr == m_toUserName) ||
         (fromUserNameStr == m_toUserName && toUserNameStr == m_fromUserName)) {
-        if (!m_map.contains(fromUserNameStr + toUserNameStr + createTimeStr))
+        if (!m_map.contains(msgId))
             Q_EMIT received(content, fromUserNameStr);
     }
 
@@ -147,7 +148,7 @@ void GetMsg::m_handleNewMsg(QString content,
             m_map.erase(m_map.begin());
     }
 
-    m_map.insert(fromUserNameStr + toUserNameStr + createTimeStr, createTime);
+    m_map.insert(msgId, createTime);
 }
 
 void GetMsg::finished(QNetworkReply* reply) 
@@ -190,9 +191,9 @@ void GetMsg::finished(QNetworkReply* reply)
                 connect(downLoad, &Download::finished, [=] {
                     content = "<img src=\"file://" + msgImgPath +
                         "\" width=\"128\" height=\"128\">";
-                    m_handleNewMsg(content, fromUserNameStr, toUserNameStr, time(nullptr));
+                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                        toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
-                    qWarning() << "WARNING:" << __PRETTY_FUNCTION__ << msgId << m_skey;
                 });
             } else if (msgType == 51) {
                 // TODO: you are tapping on your phone ;-)
@@ -201,7 +202,7 @@ void GetMsg::finished(QNetworkReply* reply)
             }
         }
 
-        m_handleNewMsg(content, fromUserNameStr, toUserNameStr, createTime);
+        m_handleNewMsg(msgId, content, fromUserNameStr, toUserNameStr, createTime);
     }
     
     m_syncKey.clear();
