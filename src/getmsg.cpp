@@ -223,6 +223,12 @@ void GetMsg::finished(QNetworkReply* reply)
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
+            } else if (msgType == 49) {
+                content = tr("Please view it on your phone") + " <a href=\"" +
+                    msg["Url"].toString() + "\">" + msg["FileName"].toString() +
+                    "</a>";
+            } else if (msgType == 10002) {
+                content = tr("Withdraw a message");
             } else if (msgType == 51) {
                 // TODO: you are tapping on your phone ;-)
             } else {
