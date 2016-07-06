@@ -195,6 +195,34 @@ void GetMsg::finished(QNetworkReply* reply)
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
+            } else if (msgType == 34) {
+                QString url = m_v2 ? WX_V2_SERVER_HOST : WX_SERVER_HOST +
+                    WX_CGI_PATH + "webwxgetvoice?msgid=" + msgId + "&skey=" +
+                    m_skey;
+                QString msgVoicePath = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/voice_" + msgId + ".mp3";
+                Download *downLoad = new Download;
+                downLoad->get(url, msgVoicePath, true, false);
+                connect(downLoad, &Download::finished, [=] {
+                    content = "<a href=\"file://" + msgVoicePath + "\">" +
+                        tr("Voice") + "</a>";
+                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                        toUserNameStr, time(nullptr));
+                    downLoad->deleteLater();
+                });
+            } else if (msgType == 62) {
+                QString url = m_v2 ? WX_V2_SERVER_HOST : WX_SERVER_HOST +
+                    WX_CGI_PATH + "webwxgetvideo?msgid=" + msgId + "&skey=" +
+                    m_skey;
+                QString msgVideoPath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation) + "/video_" + msgId + ".mp4";
+                Download *downLoad = new Download;
+                downLoad->get(url, msgVideoPath, true, false);
+                connect(downLoad, &Download::finished, [=] {
+                    content = "<a href=\"file://" + msgVideoPath + "\">" +
+                        tr("Video") + "</a>";
+                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                        toUserNameStr, time(nullptr));
+                    downLoad->deleteLater();
+                });
             } else if (msgType == 51) {
                 // TODO: you are tapping on your phone ;-)
             } else {
