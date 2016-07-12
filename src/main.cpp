@@ -2,6 +2,7 @@
 
 #include <QtQml>
 #include <QtQuick/QQuickView>
+#include <QScreen>
 
 #include "globaldeclarations.h"
 #include "qtsingleapplication/QtSingleApplication"
@@ -78,6 +79,9 @@ int main(int argc, char* argv[])
     // FIXME: it does not work for KWin 5.7.x
     // https://blog.martin-graesslin.com/blog/2016/07/multi-screen-woes-in-plasma-5-7/
     // Newly opened windows not placed on the primary screen
+#if QWX_DEBUG
+    qDebug() << "DEBUG:" << app.primaryScreen()->availableGeometry();
+#endif
     window->setScreen(app.primaryScreen());
     window->show();
 
