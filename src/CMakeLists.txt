@@ -34,6 +34,7 @@ add_executable(qwx
     weather.cpp
     i18n.cpp
     clipboard.cpp
+    uploadmedia.cpp
     ${qwx_RC_SRCS}
 )
 

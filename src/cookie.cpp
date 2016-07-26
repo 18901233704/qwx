@@ -1,9 +1,11 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QDir>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QSettings>
+
 #include <time.h>
 
 #include "cookie.h"
@@ -40,6 +42,15 @@ void Cookie::getV2(QString redirect_uri)
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url);
+}
+
+QString Cookie::getDataTicket() 
+{
+    QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
+#if QWX_DEBUG
+    qDebug() << cookie.allKeys();
+#endif
+    return cookie.value("webwx_data_ticket").toString();
 }
 
 void Cookie::finished(QNetworkReply* reply) 

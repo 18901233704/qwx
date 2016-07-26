@@ -6,7 +6,7 @@ set(QT_MIN_VERSION "5.6.0")
 
 # Set version
 set(QWX_VERSION_MAJOR 0)
-set(QWX_VERSION_MINOR 8)
+set(QWX_VERSION_MINOR 9)
 set(QWX_VERSION_PATCH 0)
 set(QWX_VERSION_STRING "${QWX_VERSION_MAJOR}.${QWX_VERSION_MINOR}.${QWX_VERSION_PATCH}")
 set(PROJECT_VERSION QWX_VERSION_STRING)
@@ -43,12 +43,18 @@ if(NOT DEFINED CMAKE_INSTALL_LOCALSTATEDIR)
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Core LinguistTools Widgets Qml Quick Network Xml)
+if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
+    find_package(Qt5Test REQUIRED)
+endif()
 
 include(FeatureSummary)
 
 # Add subdirectories
 add_subdirectory(translations)
 add_subdirectory(src)
+if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
+    add_subdirectory(tests)
+endif()
 
 # Display feature summary
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
