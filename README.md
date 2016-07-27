@@ -28,6 +28,8 @@ make
 
 ```
 
+[RPM package spec file](https://github.com/isoft-linux/packages-extra/blob/master/qwx/qwx.spec)
+
 ## i18n
 
 ```
