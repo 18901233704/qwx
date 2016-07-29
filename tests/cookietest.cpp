@@ -18,31 +18,23 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "qtsingleapplication/QtSingleApplication"
 #include "cookietest.h"
 
 CookieTest::CookieTest(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), 
+      m_cookiePtr(new Cookie)
 {
-    m_cookie = new Cookie;
-    qDebug() << m_cookie->getDataTicket();
+    qDebug() << Cookie::getDataTicket();
 }
 
 CookieTest::~CookieTest()
 {
-    if (m_cookie) {
-        delete m_cookie;
-        m_cookie = nullptr;
-    }
 }
 
 int main(int argc, char *argv[])
 {
-    QtSingleApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("cookietest"));
-
-    CookieTest *test = new CookieTest;
-    return app.exec();
+    QScopedPointer<CookieTest> test(new CookieTest);
+    return 0;
 }
 
 #include "moc_cookietest.cpp"

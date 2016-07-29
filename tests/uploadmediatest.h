@@ -22,6 +22,7 @@
 #define _UPLOADMEDIATEST_H_
 
 #include <QObject>
+#include <QScopedPointer>
 
 #include "uploadmedia.h"
 
@@ -30,11 +31,11 @@ class UploadMediaTest : public QObject
     Q_OBJECT
 
 public:
-    UploadMediaTest(QString filePath, QObject *parent = nullptr);
+    UploadMediaTest(QString filePath, QObject *parent = Q_NULLPTR);
     ~UploadMediaTest();
 
 private:
-    UploadMedia *m_uploader = nullptr;
+    QScopedPointer<UploadMedia> m_uploaderPtr;
 };
 
 #endif

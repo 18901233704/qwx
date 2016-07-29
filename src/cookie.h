@@ -16,7 +16,7 @@ public:
     Q_INVOKABLE void get(QString redirect_uri);
     Q_INVOKABLE void getV2(QString redirect_uri);
     
-    QString getDataTicket();
+    static QString getDataTicket();
 
 Q_SIGNALS:
     void infoChanged(QString uin, QString sid, QString ticket);

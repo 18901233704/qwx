@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <time.h>
@@ -47,13 +47,13 @@ void SendMsg::send(QString uin,
 }
 
 void SendMsg::sendV2(QString uin,
-                   QString sid,
-                   QString skey,
-                   QString deviceId,
-                   QString fromUserName,
-                   QString toUserName,
-                   QString content,
-                   QStringList syncKey)
+                     QString sid,
+                     QString skey,
+                     QString deviceId,
+                     QString fromUserName,
+                     QString toUserName,
+                     QString content,
+                     QStringList syncKey)
 {
     m_saveLog(fromUserName, toUserName, content);
     postV2(uin, sid, skey, deviceId, fromUserName, toUserName, content);

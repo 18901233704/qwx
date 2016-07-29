@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef SEND_MSG_H
 #define SEND_MSG_H
@@ -23,13 +23,13 @@ public:
                           QString content, 
                           QStringList syncKey);
     Q_INVOKABLE void sendV2(QString uin,
-                          QString sid,
-                          QString skey,
-                          QString deviceId,
-                          QString fromUserName,
-                          QString toUserName,
-                          QString content,
-                          QStringList syncKey);
+                            QString sid,
+                            QString skey,
+                            QString deviceId,
+                            QString fromUserName,
+                            QString toUserName,
+                            QString content,
+                            QStringList syncKey);
     Q_INVOKABLE void post(QString uin, 
                           QString sid, 
                           QString skey,

@@ -18,32 +18,26 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "qtsingleapplication/QtSingleApplication"
 #include "uploadmediatest.h"
 
 static int m_mediaCount = 1;
 
 UploadMediaTest::UploadMediaTest(QString filePath, QObject *parent)
-    : QObject(parent)
+    : QObject(parent), 
+      m_uploaderPtr(new UploadMedia(filePath, m_mediaCount++, 
+                  "ticket", "uin", "sid", "skey", "deviceId"))
 {
-    m_uploader = new UploadMedia(filePath, m_mediaCount++, "ticket");
 }
 
 UploadMediaTest::~UploadMediaTest()
 {
-    if (m_uploader) {
-        delete m_uploader;
-        m_uploader = nullptr;
-    }
 }
 
 int main(int argc, char *argv[])
 {
-    QtSingleApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("uploadmediatest"));
-
-    UploadMediaTest *test = new UploadMediaTest(argv[1] ? argv[1] : "/tmp/test.png");
-    return app.exec();
+    // FIXME: lead QTBUG-52988 https://bugreports.qt.io/browse/QTBUG-52988
+    QScopedPointer<UploadMediaTest> test(new UploadMediaTest(argv[1] ? argv[1] : "/tmp/test.png"));
+    return 0;
 }
 
 #include "moc_uploadmediatest.cpp"

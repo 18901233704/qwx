@@ -22,6 +22,7 @@
 #define _COOKIETEST_H_
 
 #include <QObject>
+#include <QScopedPointer>
 
 #include "cookie.h"
 
@@ -30,11 +31,11 @@ class CookieTest : public QObject
     Q_OBJECT
 
 public:
-    CookieTest(QObject *parent = nullptr);
+    CookieTest(QObject *parent = Q_NULLPTR);
     ~CookieTest();
 
 private:
-    Cookie *m_cookie = nullptr;
+    QScopedPointer<Cookie> m_cookiePtr;
 };
 
 #endif

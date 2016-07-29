@@ -14,7 +14,11 @@ class UploadMedia : public QObject
 public:
     UploadMedia(QString filePath, 
                 int mediaCount, 
-                QString ticket, 
+                QString ticket,
+                QString uin,
+                QString sid,
+                QString skey,
+                QString deviceId,
                 QObject* parent = nullptr);
     virtual ~UploadMedia();
 
