@@ -12,7 +12,7 @@ images and protocol ***Copyright (C) by [Tencent](http://weixin.qq.com/)***
 ### Dependences for ArchLinux
 
 ```
-sudo pacman -S qt5-base qt5-declarative
+sudo pacman -S qt5-base qt5-declarative qt5-tools qt5-quickcontrols qt5-graphicaleffects
 ```
 
 ### Dependences for Ubuntu 15.04+
