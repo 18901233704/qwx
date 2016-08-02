@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2015 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef CHATLOG_H
 #define CHATLOG_H
@@ -14,8 +14,8 @@ class ChatLog : public QObject
     Q_PROPERTY(QList<QObject*> chatLogList READ chatLogList NOTIFY chatLogListChanged)
 
 public:
-    explicit ChatLog(QObject* parent = nullptr);
-    ~ChatLog();
+    explicit ChatLog(QObject* parent = Q_NULLPTR);
+    virtual ~ChatLog();
 
     QList<QObject*> chatLogList() const { return m_chatLogList; }
 
@@ -25,6 +25,8 @@ Q_SIGNALS:
     void chatLogListChanged();
 
 private:
+    void clearChatLogList();
+
     QList<QObject*> m_chatLogList;
 };
 

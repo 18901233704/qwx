@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2015 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>                                                                   
 #include <QDebug>
@@ -7,7 +7,7 @@
 #include "globaldeclarations.h"
 
 ChatLog::ChatLog(QObject* parent) 
-  : QObject(parent)
+    : QObject(parent)
 {
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
@@ -19,6 +19,11 @@ ChatLog::~ChatLog()
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
+    clearChatLogList();
+}
+
+void ChatLog::clearChatLogList()
+{
     Q_FOREACH (QObject* obj, m_chatLogList) {
         if (obj) {
             delete obj;
@@ -32,6 +37,7 @@ void ChatLog::load(QString toUserName)
 {
     QFile file(QWXDIR + "/" + toUserName + ".txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        clearChatLogList();
         QTextStream in(&file);
         while (!in.atEnd()) {
             QString line = in.readLine();
