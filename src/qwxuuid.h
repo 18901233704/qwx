@@ -18,7 +18,7 @@ public:
 Q_SIGNALS:
     void error();
     void uuidChanged(QString uuid);
-    void cookieExists(QString uin, QString sid, QString ticket, bool isV2);
+    void autologin(QString uin, QString sid, QString ticket, bool isV2);
 
 protected:
     void finished(QNetworkReply* reply);

@@ -2,6 +2,8 @@
 
 #include <time.h>
 
+#include <QTimer>
+
 #include "qwxuuid.h"
 #include "cookie.h"
 #include "globaldeclarations.h"
@@ -12,10 +14,7 @@ QwxUUID::QwxUUID(HttpGet* parent)
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
-    if (Cookie::exists())
-        Q_EMIT cookieExists(Cookie::getUin(), Cookie::getSid(), Cookie::getTicket(), Cookie::isV2());
-    else
-        get();
+    get();
 }
 
 QwxUUID::~QwxUUID()
@@ -27,6 +26,14 @@ QwxUUID::~QwxUUID()
 
 void QwxUUID::get()
 {
+    if (Cookie::exists()) {
+        QTimer::singleShot(100, this, [this]{
+            Q_EMIT autologin(Cookie::getUin(), Cookie::getSid(),
+                             Cookie::getTicket(), Cookie::isV2());
+        });
+        return;
+    }
+
     QString url = LOGIN_SERVER_HOST + "/jslogin?appid=wx782c26e4c19acffb"
         "&redirect_uri=" + WX_SERVER_HOST + WX_CGI_PATH + "webwxnewloginpage"
         "&fun=new&lang=zh_CN&_=" + QString::number(time(NULL));

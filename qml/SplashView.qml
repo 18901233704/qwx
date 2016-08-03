@@ -29,17 +29,18 @@ Rectangle {
     QwxUUID {
         id: uuidObj
         onError: {
-            console.log("ERROR: fail to get UUID!")
+            console.log("ERROR: fail to get UUID!");
         }
-        onCookieExists: {
+        onAutologin: {
+            console.log("Cookie exists! try to autologin...");
             Global.uin = uin;
             Global.sid = sid;
             Global.ticket = ticket;
             Global.v2 = isV2;
 			if (Global.v2) {
-				initObj.postV2(Global.uin, Global.sid, Global.ticket)
+				initObj.postV2(Global.uin, Global.sid, Global.ticket);
 			} else {
-				initObj.post(Global.uin, Global.sid, Global.ticket)
+				initObj.post(Global.uin, Global.sid, Global.ticket);
 			}
         }
         onUuidChanged: {

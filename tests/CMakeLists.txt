@@ -15,6 +15,7 @@ macro(QWX_EXECUTABLE_TESTS)
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/httpget.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/cookie.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/chatlog.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/../src/qwxuuid.cpp
         )
         target_link_libraries(${_testname}
             Qt5::Test
@@ -28,4 +29,5 @@ QWX_EXECUTABLE_TESTS(
     uploadmediatest
     cookietest
     chatlogtest
+    qwxuuidtest
 )
