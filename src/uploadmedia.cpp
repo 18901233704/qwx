@@ -41,7 +41,7 @@ UploadMedia::UploadMedia(QString filePath,
 		std::mt19937 eng(time(NULL));
         std::uniform_int_distribution<long long> rand(1615250492, 519062714508114);
         QString clientMediaId = QString::number(rand(eng));
-        QString webwxDataTicket = Cookie::getDataTicket();
+        QString webwxDataTicket = Cookie::getTicket();
 #if QWX_DEBUG
         qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << lastModifieDateStr 
                  << fileSize << clientMediaId << webwxDataTicket;

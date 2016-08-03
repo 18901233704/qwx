@@ -1,8 +1,9 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <time.h>
 
 #include "qwxuuid.h"
+#include "cookie.h"
 #include "globaldeclarations.h"
 
 QwxUUID::QwxUUID(HttpGet* parent)
@@ -11,7 +12,10 @@ QwxUUID::QwxUUID(HttpGet* parent)
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
-    get();
+    if (Cookie::exists())
+        Q_EMIT cookieExists(Cookie::getUin(), Cookie::getSid(), Cookie::getTicket(), Cookie::isV2());
+    else
+        get();
 }
 
 QwxUUID::~QwxUUID()

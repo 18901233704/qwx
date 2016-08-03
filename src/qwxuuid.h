@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef QWXUUID_H
 #define QWXUUID_H
@@ -10,14 +10,15 @@ class QwxUUID : public HttpGet
     Q_OBJECT
 
 public:
-    QwxUUID(HttpGet* parent = nullptr);
-    ~QwxUUID();
+    explicit QwxUUID(HttpGet* parent = Q_NULLPTR);
+    virtual ~QwxUUID();
 
     Q_INVOKABLE void get();
 
 Q_SIGNALS:
     void error();
     void uuidChanged(QString uuid);
+    void cookieExists(QString uin, QString sid, QString ticket, bool isV2);
 
 protected:
     void finished(QNetworkReply* reply);

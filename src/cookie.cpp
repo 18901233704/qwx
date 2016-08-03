@@ -44,13 +44,36 @@ void Cookie::getV2(QString redirect_uri)
     HttpGet::get(url);
 }
 
-QString Cookie::getDataTicket() 
+QString Cookie::getTicket()
 {
     QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
 #if QWX_DEBUG
     qDebug() << cookie.allKeys();
 #endif
     return cookie.value("webwx_data_ticket").toString();
+}
+
+QString Cookie::getUin()
+{
+    QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
+    return cookie.value("wxuin").toString();
+}
+
+QString Cookie::getSid()
+{
+    QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
+    return cookie.value("wxsid").toString();
+}
+
+bool Cookie::isV2() 
+{
+    QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
+    return cookie.value("v2").toBool();
+}
+
+bool Cookie::exists()
+{
+    return QFile::exists(QWXDIR + "/" + COOKIE_FILENAME);
 }
 
 void Cookie::finished(QNetworkReply* reply) 
@@ -108,6 +131,7 @@ void Cookie::finished(QNetworkReply* reply)
             qWarning() << "V2 still use XML format for cookie?";
             return;
         } else {
+            out << "v2=true";
             Q_EMIT switchToV2();
         }
     } else { 

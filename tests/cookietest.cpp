@@ -24,7 +24,8 @@ CookieTest::CookieTest(QObject *parent)
     : QObject(parent), 
       m_cookiePtr(new Cookie)
 {
-    qDebug() << Cookie::getDataTicket();
+    qDebug() << Cookie::getTicket() << Cookie::getUin() << Cookie::getSid() 
+             << Cookie::isV2() << Cookie::exists();
 }
 
 CookieTest::~CookieTest()
