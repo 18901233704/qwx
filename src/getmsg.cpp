@@ -244,5 +244,9 @@ void GetMsg::finished(QNetworkReply* reply)
         m_syncKey.append(QString::number(val.toObject()["Key"].toInt()) + "|" + 
                 QString::number(val.toObject()["Val"].toInt()));
     }
+    if (m_syncKey.size() == 0) {
+        QFile cookie(QWXDIR + "/" + COOKIE_FILENAME);
+        cookie.remove();
+    }
     Q_EMIT syncKeyChanged();
 }
