@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef HEAD_IMG_H
 #define HEAD_IMG_H
@@ -13,10 +13,11 @@ class HeadImg : public QObject
     Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged)
     Q_PROPERTY(QString headImgUrl READ headImgUrl WRITE setHeadImgUrl NOTIFY headImgUrlChanged)
     Q_PROPERTY(QString filePath READ filePath NOTIFY filePathChanged)
+    Q_PROPERTY(QString skey READ skey WRITE setSkey NOTIFY skeyChanged)
 
 public:
-    HeadImg(QObject* parent = nullptr);
-    ~HeadImg();
+    explicit HeadImg(QObject* parent = Q_NULLPTR);
+    virtual ~HeadImg();
 
     bool v2() const { return m_v2; }
     void setV2(bool v2);
@@ -29,11 +30,15 @@ public:
 
     QString filePath() const { return m_filePath; }
 
+    QString skey() const { return m_skey; }
+    void setSkey(const QString& skey);
+
 Q_SIGNALS:
     void v2Changed();
     void userNameChanged();
     void headImgUrlChanged();
     void filePathChanged();
+    void skeyChanged();
 
 private:
     void m_get(QString host);
@@ -45,6 +50,7 @@ private:
     QString m_filePath;
     Download m_downLoad;
     QMetaObject::Connection m_connection;
+    QString m_skey;
 };
 
 #endif // HEAD_IMG_H

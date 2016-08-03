@@ -143,7 +143,8 @@ Rectangle {
 			height: (chatText.contentHeight < fromUserHeadImage.height ? fromUserHeadImage.height : chatText.contentHeight) + 12
 
 			HeadImg {
-				id: fromUserHeadImgObj
+                id: fromUserHeadImgObj
+                skey: Global.skey
 				userName: curUserName
 				onFilePathChanged: {
 					fromUserHeadImage.imageSource = fromUserHeadImgObj.filePath

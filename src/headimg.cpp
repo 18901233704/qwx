@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QDir>
@@ -11,7 +11,8 @@ HeadImg::HeadImg(QObject* parent)
     m_v2(false),
     m_userName(""), 
     m_headImgUrl(""),
-    m_filePath("")
+    m_filePath(""),
+    m_skey("")
 {
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
@@ -51,7 +52,7 @@ void HeadImg::m_get(QString host)
 {
     QString url = host + (m_headImgUrl.contains("webwxgeticon") ? 
         WX_CGI_PATH + "webwxgeticon?username=" + m_userName :
-        WX_CGI_PATH + "webwxgetheadimg?username=" + m_userName);
+        WX_CGI_PATH + "webwxgetheadimg?username=" + m_userName) + "&skey=" + m_skey;
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
@@ -67,4 +68,10 @@ void HeadImg::m_get(QString host)
                     Q_EMIT filePathChanged();
                 });
     }
+}
+
+void HeadImg::setSkey(const QString& skey)
+{
+    m_skey = skey;
+    Q_EMIT skeyChanged();
 }

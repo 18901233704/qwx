@@ -35,6 +35,7 @@ Item {
 
             HeadImg {                                                              
                 v2: Global.v2
+                skey: Global.skey
                 userName: modelData.userName
                 headImgUrl: modelData.headImgUrl
                 onFilePathChanged: {                                               

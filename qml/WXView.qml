@@ -157,6 +157,7 @@ Item {
             HeadImg {
                 id: headImgObj
                 v2: Global.v2
+                skey: Global.skey
                 userName: wxUserName
                 headImgUrl: wxHeadImgUrl
                 onFilePathChanged: {
