@@ -15,6 +15,14 @@
         <source>New message</source>
         <translation type="unfinished">有新消息</translation>
     </message>
+    <message>
+        <source>Image</source>
+        <translation type="unfinished">图片</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation type="unfinished">视频</translation>
+    </message>
 </context>
 <context>
     <name>Contact</name>
@@ -27,11 +35,35 @@
     <name>GetMsg</name>
     <message>
         <source>Please view the photo on your phone</source>
-        <translation type="unfinished">请在您手机上浏览照片</translation>
+        <translation type="obsolete">请在您手机上浏览照片</translation>
     </message>
     <message>
         <source>Please view the App message on your phone</source>
-        <translation type="unfinished">请在您手机上查看 App 信息</translation>
+        <translation type="obsolete">请在您手机上查看 App 信息</translation>
+    </message>
+    <message>
+        <source>[Picture]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please view it on your phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Withdraw a message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupport MsgType %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
