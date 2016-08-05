@@ -18,41 +18,27 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "uploadmediatest.h"
+#include "qwxuuidtest.h"
 
-static int m_mediaCount = 1;
-
-UploadMediaTest::UploadMediaTest(QString filePath, QObject *parent)
+QwxUUIDTest::QwxUUIDTest(QObject *parent)
     : QObject(parent), 
-      m_uploaderPtr(new UploadMedia(filePath, m_mediaCount++, 
-                  "ticket", "uin", "sid", "skey", "deviceId"))
+      m_qwxuuidPtr(new QwxUUID)
 {
+    connect(m_qwxuuidPtr.data(), &QwxUUID::autologin, 
+            [this](QString uin, QString sid, QString ticket, bool isV2){
+        qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << "try to autologin" 
+                 << uin << sid << ticket << isV2;
+    });
 }
 
-UploadMediaTest::~UploadMediaTest()
+QwxUUIDTest::~QwxUUIDTest()
 {
 }
 
 int main(int argc, char *argv[])
 {
-#if OPENMP_FOUND
-    QStringList strList;
-    strList << "David Faure";
-    strList << "Martin Gräßlin";
-    strList << "Sebastian Kügler";
-    strList << "Leslie Zhai";
-
-    #pragma omp parallel
-    qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << "Hello world";
-
-    #pragma omp parallel for
-    for (int i = 0; i < strList.size(); i++) {
-        qDebug() << "DEBUG:" << strList[i];
-    }
-#endif
-    // FIXME: lead QTBUG-52988 https://bugreports.qt.io/browse/QTBUG-52988
-    QScopedPointer<UploadMediaTest> test(new UploadMediaTest(argv[1] ? argv[1] : "/tmp/test.png"));
+    QScopedPointer<QwxUUIDTest> test(new QwxUUIDTest);
     return 0;
 }
 
-#include "moc_uploadmediatest.cpp"
+#include "moc_qwxuuidtest.cpp"

@@ -22,6 +22,9 @@ macro(QWX_EXECUTABLE_TESTS)
             Qt5::Network
             Qt5::Xml
         )
+        if(OPENMP_FOUND)
+            target_link_libraries(${_testname} ${OPENMP_LIBRARIES})
+        endif()
     endforeach()
 endmacro(QWX_EXECUTABLE_TESTS)
 

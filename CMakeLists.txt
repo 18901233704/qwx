@@ -1,8 +1,11 @@
 project(qwx)
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
 set(CMAKE_AUTOMOC ON)
 set(QT_MIN_VERSION "5.6.0")
+
+include(FeatureSummary)
 
 # Set version
 set(QWX_VERSION_MAJOR 0)
@@ -14,8 +17,8 @@ add_definitions("-DQWX_VERSION_STRING=\"${QWX_VERSION_STRING}\"")
 add_definitions("-DPROJECT_VERSION=\"${PROJECT_VERSION}\"")
 
 # Definitions
-set(DATADIR ${CMAKE_INSTALL_PREFIX}/share)
 add_definitions(-std=c++14 -fpermissive)
+set(DATADIR ${CMAKE_INSTALL_PREFIX}/share)
 add_definitions("-DDATADIR=\"${DATADIR}\"")
 
 # Default build type
@@ -47,7 +50,17 @@ if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     find_package(Qt5Test REQUIRED)
 endif()
 
-include(FeatureSummary)
+find_package(OpenMP)
+set_package_properties(OpenMP PROPERTIES DESCRIPTION "The OpenMP libraries"
+                       URL "http://www.openmp.org"
+                       TYPE OPTIONAL
+                       PURPOSE "Only test for GCC 6.x"
+                      )
+if(OPENMP_FOUND)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(OPENMP_LIBRARIES "-lgomp")
+    add_definitions("-DOPENMP_FOUND")
+endif()
 
 # Add subdirectories
 add_subdirectory(translations)
