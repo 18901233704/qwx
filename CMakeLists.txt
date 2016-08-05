@@ -37,7 +37,7 @@ else()
 endif()
 
 find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets Qml Quick Network Xml QuickWidgets)
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS I18n DBusAddons XmlGui)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS I18n DBusAddons XmlGui Declarative)
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     find_package(Qt5Test ${REQUIRED_QT_VERSION} REQUIRED)
 endif()

@@ -1,5 +1,7 @@
 // Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
+#include <KLocalizedString>
+
 #if QWX_DEBUG                                                                      
 #include <QFile>                                                                   
 #endif                                                                             
@@ -73,7 +75,7 @@ void Contact::finished(QNetworkReply* reply)
     if (!doc.isObject()) { Q_EMIT error(); return; }                                 
     QJsonObject obj = doc.object();                                                
     QJsonArray arr = obj["MemberList"].toArray();                              
-    m_contactList.append(new UserObject("groupsend", tr("Group Send"), ""));
+    m_contactList.append(new UserObject("groupsend", i18n("Group Send"), ""));
     Q_FOREACH (const QJsonValue & val, arr) {
         QJsonObject user = val.toObject();                                         
         m_contactList.append(new UserObject(user["UserName"].toString(), 

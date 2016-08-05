@@ -70,11 +70,8 @@ Rectangle {
 		toUserName: chatView.toUserName
 		needSaveLog: true
 		onNoNewMsg: {
-			rootWindow.title = qsTr("WeChat Qt frontend")
 		}
 		onReceived: {
-			rootWindow.title = qsTr("WeChat Qt frontend") + " - " + qsTr(
-						"New message")
 			if (content == "小逗比退下" || content == "robot away") {
 				Global.isRobot = false
 			} else if (content == "小逗比出来" || content == "robot come") {
@@ -377,8 +374,10 @@ Rectangle {
     ListModel {
         id: plusModel
 
-        ListElement { name: "image"; icon: "../images/image.png"; title: qsTr("Image") }
-        ListElement { name: "video"; icon: "../images/video.png"; title: qsTr("Video") }
+        /* FIXME: QML ListElement can *NOT* use ki18n!
+        ListElement { name: "image"; icon: "../images/image.png"; title: i18n("Image") }
+        ListElement { name: "video"; icon: "../images/video.png"; title: i18n("Video") }
+        */
     }
 
 	GridView {
@@ -497,7 +496,7 @@ Rectangle {
 
 			Button {
 				id: sendButton
-                text: qsTr("Send")
+                text: i18n("Send")
                 visible: true
 				anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter

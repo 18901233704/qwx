@@ -42,6 +42,8 @@
 #include "i18n.h"
 #include "clipboard.h"
 
+#include <KDeclarative/KDeclarative>
+
 #include <QQmlEngine>
 #include <QScopedPointer>
 #include <QQuickWidget>
@@ -49,6 +51,8 @@
 KwxWin::KwxWin(QWidget *parent)
     : KXmlGuiWindow(parent)
 {
+    KDeclarative::KDeclarative kdeclarative;
+
     qmlRegisterType<QwxUUID>("cn.com.isoft.qwx", 1, 0, "QwxUUID");
     qmlRegisterType<Scan>("cn.com.isoft.qwx", 1, 0, "Scan");
     qmlRegisterType<Cookie>("cn.com.isoft.qwx", 1, 0, "Cookie");
@@ -70,14 +74,21 @@ KwxWin::KwxWin(QWidget *parent)
     qmlRegisterType<Weather>("cn.com.isoft.qwx", 1, 0, "Weather");
     qmlRegisterType<Clipboard>("cn.com.isoft.qwx", 1, 0, "Clipboard");
 
-    resize(480, 822);
-
     m_widget = new QQuickWidget(QUrl("qrc:/qml/main.qml"), parent);
+    // To make QML code translatable, KDeclarative provides the same i18n() 
+    // calls described above. To enable parsing at runtime, you need to install 
+    // a KDeclarative object in the QDeclarativeEngine:
+    kdeclarative.setDeclarativeEngine(m_widget->engine());
+    kdeclarative.initialize();
+    // binds things like kconfig and icons
+    kdeclarative.setupBindings();
     // the view will automatically resize the root item to the size of the view
     // that means QML will automatically resize to the KXmlGuiWindow's.
     m_widget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     setCentralWidget(m_widget);
     setupGUI();
+
+    resize(480, 822);
 }
 
 KwxWin::~KwxWin() 

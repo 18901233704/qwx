@@ -83,7 +83,6 @@ Item {
 	Monitor {
 		id: monitorObj
 		onNoNewMsg: {
-			rootWindow.title = qsTr("WeChat Qt frontend")
 		}
 		onNewMsg: {
 			Global.monitorNewMsg()
@@ -119,21 +118,21 @@ Item {
 				anchors.top: navigatorHeader.bottom
 
 				IconTab {
-					title: qsTr("WeChat")
+					title: i18n("WeChat")
 					iconSource: "images/messages.png"
 					WXView {
 					}
 				}
 
 				IconTab {
-					title: qsTr("Contact")
+					title: i18n("Contact")
 					iconSource: "images/contacts.png"
 					ContactListView {
 					}
 				}
 
 				IconTab {
-					title: qsTr("Me")
+					title: i18n("Me")
 					iconSource: loginUserHeadImg.filePath
 					IView {
 					}
@@ -180,7 +179,7 @@ Item {
 				color: "#20282a"
 
 				Text {
-					text: qsTr("WeChat")
+					text: i18n("WeChat")
 					font.pixelSize: 22
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.left: parent.left

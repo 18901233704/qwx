@@ -1,5 +1,7 @@
 // Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
+#include <KLocalizedString>
+
 #include <QFile>
 #include <QJsonDocument>                                                           
 #include <QJsonObject>                                                             
@@ -96,7 +98,7 @@ QString GetMsg::contentWithoutUserName(QString content)
         content = content.mid(content.indexOf(":<br/>") + QString(":<br/>").size());
 
     if (content.contains("<img src="))
-        content = tr("[Picture]");
+        content = i18n("[Picture]");
 
     return content;
 }
@@ -204,7 +206,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 downLoad->get(url, msgVoicePath, true, false);
                 connect(downLoad, &Download::finished, [=] {
                     content = "<a href=\"file://" + msgVoicePath + "\">" +
-                        tr("Voice") + "</a>";
+                        i18n("Voice") + "</a>";
                     m_handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
@@ -218,21 +220,21 @@ void GetMsg::finished(QNetworkReply* reply)
                 downLoad->get(url, msgVideoPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
                     content = "<a href=\"file://" + msgVideoPath + "\">" +
-                        tr("Video") + "</a>";
+                        i18n("Video") + "</a>";
                     m_handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
             } else if (msgType == 49) {
-                content = tr("Please view it on your phone") + " <a href=\"" +
+                content = i18n("Please view it on your phone") + " <a href=\"" +
                     msg["Url"].toString() + "\">" + msg["FileName"].toString() +
                     "</a>";
             } else if (msgType == 10002) {
-                content = tr("Withdraw a message");
+                content = i18n("Withdraw a message");
             } else if (msgType == 51) {
                 // TODO: you are tapping on your phone ;-)
             } else {
-                content = tr("Unsupport MsgType %1").arg(msgType);
+                content = i18n("Unsupport MsgType %1").arg(msgType);
             }
         }
 

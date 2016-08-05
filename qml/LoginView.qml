@@ -18,7 +18,7 @@ Item {
 
 		Label {
 			id: titleText
-			text: Global.v2 ? qsTr("WeChat") + " V2" : qsTr("WeChat")
+			text: Global.v2 ? i18n("WeChat") + " V2" : i18n("WeChat")
 			font.pixelSize: 22
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.top: parent.top
@@ -35,7 +35,7 @@ Item {
 
 		Label {
 			id: tipText
-			text: qsTr("Loading QRcode ...")
+			text: i18n("Loading QRcode ...")
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.top: qrcodeImage.bottom
 			anchors.topMargin: 38
@@ -49,14 +49,14 @@ Item {
 		}
 		onScanedButWaitConfirm: {
 			console.log("scanned but waiting for confirm...")
-			tipText.text = qsTr("Please confirm on your mobile")
+			tipText.text = i18n("Please confirm on your mobile")
 			loginView.tip = "0"
 			statReportObj.firstRequestSuccess(loginView.uuid)
 			statReportObj.secondRequestStart(loginView.uuid)
 		}
 		onScanedAndConfirmed: {
 			console.log("confirmed!")
-			tipText.text = qsTr("Confirmed then waiting for login")
+			tipText.text = i18n("Confirmed then waiting for login")
 			scanTimer.stop()
 			if (Global.v2) {
 				cookieObj.getV2(redirect_uri)
@@ -68,7 +68,7 @@ Item {
 
 	function scanQRcode() {
 		if (qrcodeImage.status == Image.Ready) {
-			tipText.text = Global.v2 ? qsTr("Please again scan the QRcode to login") : qsTr(
+			tipText.text = Global.v2 ? i18n("Please again scan the QRcode to login") : i18n(
 										   "Please scan the QRcode to login")
 			scanObj.get(loginView.uuid, loginView.tip)
 		}

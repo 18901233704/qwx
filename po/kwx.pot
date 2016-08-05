@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 14:34+0800\n"
+"POT-Creation-Date: 2016-08-05 15:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,27 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Group Send"
+msgstr ""
+
+msgid "[Picture]"
+msgstr ""
+
+msgid "Voice"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Please view it on your phone"
+msgstr ""
+
+msgid "Withdraw a message"
+msgstr ""
+
+msgid "Unsupport MsgType %1"
+msgstr ""
 
 msgid "WeChat KDE frontend"
 msgstr ""
@@ -36,4 +57,31 @@ msgid "Developer"
 msgstr ""
 
 msgid "Mingcong Bai"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "WeChat"
+msgstr ""
+
+msgid "Loading QRcode ..."
+msgstr ""
+
+msgid "Please confirm on your mobile"
+msgstr ""
+
+msgid "Confirmed then waiting for login"
+msgstr ""
+
+msgid "Please again scan the QRcode to login"
+msgstr ""
+
+msgid "Please scan the QRcode to login"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Me"
 msgstr ""

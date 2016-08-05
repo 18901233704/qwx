@@ -63,14 +63,12 @@ Item {
             Global.syncKey = getMsgObj.syncKey;
         }
         onNoNewMsg: {
-            rootWindow.title = qsTr("WeChat Qt frontend");
         }
         onNewMsg: {
             var isExist = false;
             var nickName = "";
             var headImgUrl = "";
             
-            rootWindow.title = qsTr("WeChat Qt frontend") + " - " + qsTr("New message");
             for (var i = 0; i < wxListModel.count; i++) {
                 var userName = wxListModel.get(i).wxUserName;
                 nickName = contactObj.getNickName(userName);
