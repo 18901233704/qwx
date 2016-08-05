@@ -73,6 +73,9 @@ KwxWin::KwxWin(QWidget *parent)
     resize(480, 822);
 
     m_widget = new QQuickWidget(QUrl("qrc:/qml/main.qml"), parent);
+    // the view will automatically resize the root item to the size of the view
+    // that means QML will automatically resize to the KXmlGuiWindow's.
+    m_widget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     setCentralWidget(m_widget);
     setupGUI();
 }
