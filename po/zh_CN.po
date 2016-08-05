@@ -1,0 +1,86 @@
+# Chinese/Simplified translation of kwx.
+# Copyright (C) 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+# This file is distributed under the same license as the kwx package.
+# Leslie Zhai <xiang.zhai@i-soft.com.cn>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-05 15:27+0800\n"
+"PO-Revision-Date: 2016-08-05 17:00+0800\n"
+"Last-Translator: Leslie Zhai <xiang.zhai@i-soft.com.cn>\n"
+"Language-Team: KDE-cn <i18n@kde.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Group Send"
+msgstr "群发"
+
+msgid "[Picture]"
+msgstr "[图片]"
+
+msgid "Voice"
+msgstr "音频"
+
+msgid "Video"
+msgstr "视频"
+
+msgid "Please view it on your phone"
+msgstr "请在手机上查看"
+
+msgid "Withdraw a message"
+msgstr "撤回一条消息"
+
+msgid "Unsupport MsgType %1"
+msgstr "不支持协议 %1"
+
+msgid "WeChat KDE frontend"
+msgstr "微信 KDE 前端"
+
+msgid "WeChat GUI frontend for KDE."
+msgstr "微信 KDE 图形界面前端."
+
+msgid "(c) 2014 - 2016, Leslie Zhai"
+msgstr ""
+
+msgid "Leslie Zhai"
+msgstr ""
+
+msgid "Maintainer"
+msgstr "维护者"
+
+msgid "Developer"
+msgstr "开发者"
+
+msgid "Mingcong Bai"
+msgstr ""
+
+msgid "Send"
+msgstr "发送"
+
+msgid "WeChat"
+msgstr "微信"
+
+msgid "Loading QRcode ..."
+msgstr "加载二维码 ..."
+
+msgid "Please confirm on your mobile"
+msgstr "请在手机上确认"
+
+msgid "Confirmed then waiting for login"
+msgstr "已确认等待登录"
+
+msgid "Please again scan the QRcode to login"
+msgstr "请再次扫二维码登录"
+
+msgid "Please scan the QRcode to login"
+msgstr "请扫二维码登录"
+
+msgid "Contact"
+msgstr "联系人"
+
+msgid "Me"
+msgstr "我"
