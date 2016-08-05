@@ -5,10 +5,9 @@ import QtQuick.Controls 1.1
 import QtQuick.Window 2.1
 import cn.com.isoft.qwx 1.0
 
-ApplicationWindow {
+Item {
     id: rootWindow
 	width: 480; height: 822
-    title: qsTr("WeChat Qt frontend")
 
     StackView {
         id: rootWindowStackView

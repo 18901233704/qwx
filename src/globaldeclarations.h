@@ -6,10 +6,7 @@
 #include <QString>
 #include <QDir>
 
-const QString CODE_NAME = "qwx";
-const QString APPLICATION_VERSION = "0.9.0";
-const QString APPLICATION_ENCODING = "UTF-8";
-const QString TRANSLATIONS_PATH = "translations";
+const QString CODE_NAME = "kwx";
 
 const QString LOGIN_SERVER_HOST = "https://login.weixin.qq.com";
 const QString FILE_SERVER_HOST = "https://file.wx.qq.com";

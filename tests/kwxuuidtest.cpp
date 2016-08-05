@@ -18,7 +18,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "qwxuuidtest.h"
+#include "kwxuuidtest.h"
 
 QwxUUIDTest::QwxUUIDTest(QObject *parent)
     : QObject(parent), 
@@ -41,4 +41,4 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-#include "moc_qwxuuidtest.cpp"
+#include "moc_kwxuuidtest.cpp"

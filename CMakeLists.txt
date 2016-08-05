@@ -1,25 +1,24 @@
-project(qwx)
+project(kwx)
+set(PROJECT_VERSION "1.0.0")
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
-set(CMAKE_AUTOMOC ON)
-set(QT_MIN_VERSION "5.6.0")
 
+# ECM setup
 include(FeatureSummary)
+find_package(ECM 5.24.0  NO_MODULE)
+set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
+feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
+set(CMAKE_MODULE_PATH "${ECM_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Set version
-set(QWX_VERSION_MAJOR 0)
-set(QWX_VERSION_MINOR 9)
-set(QWX_VERSION_PATCH 0)
-set(QWX_VERSION_STRING "${QWX_VERSION_MAJOR}.${QWX_VERSION_MINOR}.${QWX_VERSION_PATCH}")
-set(PROJECT_VERSION QWX_VERSION_STRING)
-add_definitions("-DQWX_VERSION_STRING=\"${QWX_VERSION_STRING}\"")
-add_definitions("-DPROJECT_VERSION=\"${PROJECT_VERSION}\"")
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+
+set(KF5_DEP_VERSION "5.24.0")
+set(REQUIRED_QT_VERSION "5.7.0")
 
 # Definitions
-add_definitions(-std=c++14 -fpermissive)
-set(DATADIR ${CMAKE_INSTALL_PREFIX}/share)
-add_definitions("-DDATADIR=\"${DATADIR}\"")
+add_definitions(-fpermissive)
 
 # Default build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -37,17 +36,10 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 endif()
 
-# Default absolute paths
-if(NOT DEFINED CMAKE_INSTALL_SYSCONFDIR)
-    set(CMAKE_INSTALL_SYSCONFDIR "/etc")
-endif()
-if(NOT DEFINED CMAKE_INSTALL_LOCALSTATEDIR)
-    set(CMAKE_INSTALL_LOCALSTATEDIR "/var")
-endif()
-
-find_package(Qt5 REQUIRED COMPONENTS Core LinguistTools Widgets Qml Quick Network Xml)
+find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets Qml Quick Network Xml QuickWidgets)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS I18n DBusAddons XmlGui)
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
-    find_package(Qt5Test REQUIRED)
+    find_package(Qt5Test ${REQUIRED_QT_VERSION} REQUIRED)
 endif()
 
 find_package(OpenMP)
@@ -63,11 +55,8 @@ if(OPENMP_FOUND)
 endif()
 
 # Add subdirectories
-add_subdirectory(translations)
+add_subdirectory(po)
 add_subdirectory(src)
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     add_subdirectory(tests)
 endif()
-
-# Display feature summary
-feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -52,17 +52,10 @@ Item {
         id: sendMsgObj
     }
 
-    Process {                                                                      
-        id: processObj                                                             
-        program: "notify-send"                                                     
-    }
-
     GetMsg {
         id: getMsgObj
         onSyncKeyChanged: {
             if (getMsgObj.syncKey.length == 0) {
-                processObj.arguments = [qsTr("WeChat Qt frontend"), qsTr("Disconnected! Please login again"), '-i', '/usr/share/icons/hicolor/64x64/apps/qwx.png', '-t', '13000'];
-                processObj.start();
                 rootWindowStackView.clear(); 
                 rootWindowStackView.push({item: Qt.resolvedUrl("SplashView.qml")});
                 return;
@@ -106,8 +99,6 @@ Item {
             }
 
             if (nickName != "") {
-                processObj.arguments = [nickName, content, '-i', '/usr/share/icons/hicolor/64x64/apps/qwx.png', '-t', '3000'];
-                processObj.start();
             }
 
             if (content == "away") {

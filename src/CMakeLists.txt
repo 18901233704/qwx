@@ -1,15 +1,18 @@
-qt5_add_resources(qwx_RC_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../resources.qrc)
+add_definitions(-DTRANSLATION_DOMAIN=\"kwx\")
+
+qt5_add_resources(kwx_RC_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../resources.qrc)
+qt5_add_dbus_adaptor(kwx_DBUS_SRCS org.isoftlinux.kwx.xml ${CMAKE_CURRENT_SOURCE_DIR}/kwxapp.h KwxApp)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_executable(qwx 
+add_executable(kwx 
     main.cpp
-	qtsingleapplication/qtsingleapplication.cpp
-    qtsingleapplication/qtlocalpeer.cpp
+    kwxapp.cpp
+    kwxwin.cpp
     httpget.cpp
-    qwxuuid.cpp
+    kwxuuid.cpp
     scan.cpp
     cookie.cpp
     httppost.cpp
@@ -25,7 +28,6 @@ add_executable(qwx
     monitor.cpp
     getmsg.cpp
     circleimage.cpp
-    process.cpp
     xiaodoubi.cpp
     chatlog.cpp
     emotion.cpp
@@ -35,15 +37,21 @@ add_executable(qwx
     i18n.cpp
     clipboard.cpp
     uploadmedia.cpp
-    ${qwx_RC_SRCS}
+    ${kwx_RC_SRCS}
+    ${kwx_DBUS_SRCS}
 )
+target_compile_definitions(kwx PRIVATE -DPROJECT_VERSION="${PROJECT_VERSION}")
 
-target_link_libraries(qwx
+target_link_libraries(kwx
     Qt5::Widgets
     Qt5::Qml
     Qt5::Quick
     Qt5::Network
     Qt5::Xml
+    Qt5::QuickWidgets
+    KF5::I18n
+    KF5::DBusAddons
+    KF5::XmlGui
 )
 
-install(TARGETS qwx RUNTIME DESTINATION bin)
+install(TARGETS kwx RUNTIME DESTINATION bin)

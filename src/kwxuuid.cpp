@@ -4,7 +4,7 @@
 
 #include <QTimer>
 
-#include "qwxuuid.h"
+#include "kwxuuid.h"
 #include "cookie.h"
 #include "globaldeclarations.h"
 

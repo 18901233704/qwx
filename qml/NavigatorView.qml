@@ -24,17 +24,9 @@ Item {
 		console.log("Bye ;-)")
 	}
 
-	Process {
-		id: processObj
-		program: "notify-send"
-	}
-
 	Weather {
 		id: weatherObj
 		onWeatherChanged: {
-			processObj.arguments = [qsTr("Weather report"), report, '-i', 'qwx.png', '-t', '13000']
-			//			processObj.arguments = [qsTr("energy saving and emission reduction"), report, '-i', '/usr/share/icons/hicolor/64x64/apps/qwx.png', '-t', '13000'];
-			processObj.start()
 		}
 	}
 

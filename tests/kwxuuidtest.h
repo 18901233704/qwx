@@ -24,7 +24,7 @@
 #include <QObject>
 #include <QScopedPointer>
 
-#include "qwxuuid.h"
+#include "kwxuuid.h"
 
 class QwxUUIDTest : public QObject
 {
