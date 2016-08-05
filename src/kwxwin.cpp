@@ -79,9 +79,13 @@ KwxWin::KwxWin(QWidget *parent)
     // calls described above. To enable parsing at runtime, you need to install 
     // a KDeclarative object in the QDeclarativeEngine:
     kdeclarative.setDeclarativeEngine(m_widget->engine());
-    kdeclarative.initialize();
-    // binds things like kconfig and icons
+    kdeclarative.setTranslationDomain(CODE_NAME);
+    // Call this after setDeclarativeEngine to set the i18n global functions, 
+    // the runtime platform, etc
     kdeclarative.setupBindings();
+#if QWX_DEBUG
+    qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << kdeclarative.translationDomain();
+#endif
     // the view will automatically resize the root item to the size of the view
     // that means QML will automatically resize to the KXmlGuiWindow's.
     m_widget->setResizeMode(QQuickWidget::SizeRootObjectToView);
