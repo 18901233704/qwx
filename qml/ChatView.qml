@@ -375,6 +375,7 @@ Rectangle {
         id: plusModel
 
         /* FIXME: QML ListElement can *NOT* use ki18n!
+         * QTBUG-16289 https://bugreports.qt.io/browse/QTBUG-16289
         ListElement { name: "image"; icon: "../images/image.png"; title: i18n("Image") }
         ListElement { name: "video"; icon: "../images/video.png"; title: i18n("Video") }
         */
