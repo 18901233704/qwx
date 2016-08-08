@@ -7,6 +7,9 @@
 #include <QJsonObject>                                                             
 #include <QJsonArray>
 #include <QStandardPaths>
+#include <QDBusConnection>
+#include <QDBusMessage>
+
 #include <time.h>
 
 #include "getmsg.h"
@@ -14,11 +17,13 @@
 #include "globaldeclarations.h"
 
 GetMsg::GetMsg(HttpPost* parent) 
-  : HttpPost(parent)
+    : HttpPost(parent)
 {
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
+    m_contact = new Contact;
+    m_v2 ? m_contact->post() : m_contact->postV2();
 }
 
 GetMsg::~GetMsg() 
@@ -26,6 +31,52 @@ GetMsg::~GetMsg()
 #if QWX_DEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
+    delete m_contact;
+    m_contact = Q_NULLPTR;
+}
+
+void GetMsg::notificationDBusCall(const QString &title, 
+                                  const QString &body, 
+                                  const QString &iconName,
+                                  bool persistent, 
+                                  const QStringList &actions)
+{
+    QDBusMessage dbusNotificationMessage = QDBusMessage::createMethodCall(
+        "org.freedesktop.Notifications", "/org/freedesktop/Notifications", 
+        "org.freedesktop.Notifications", QStringLiteral("Notify"));
+
+    QList<QVariant> args;
+
+    args.append(i18n("WeChat KDE frontend")); // app_name
+    args.append((uint)0);  // notification to update
+    args.append(iconName); // app_icon
+    args.append(title); // summary
+    args.append(body); // body
+
+    QStringList actionList;
+    int actId = 0;
+    Q_FOREACH (const QString &actionName, actions) {
+        actId++;
+        actionList.append(QString::number(actId));
+        actionList.append(actionName);
+    }
+
+    args.append(actionList); // actions
+
+    args.append(QVariantMap()); // hints
+
+    // Persistent     => 0  == infinite timeout
+    // CloseOnTimeout => -1 == let the server decide
+    int timeout = persistent ? 0 : -1;
+
+    args.append(timeout); // expire timout
+
+    dbusNotificationMessage.setArguments(args);
+
+    QDBusMessage reply = QDBusConnection::sessionBus().call(dbusNotificationMessage, QDBus::Block, 4000);
+    if (reply.type() == QDBusMessage::ErrorMessage) {
+        qDebug() << "Error sending notification:" << reply.errorMessage();
+    }
 }
 
 void GetMsg::setFromUserName(const QString & fromUserName) 
@@ -52,11 +103,11 @@ void GetMsg::setNeedSaveLog(bool needSaveLog)
     }
 }
 
-void GetMsg::m_post(QString host, 
-                    QString uin, 
-                    QString sid, 
-                    QString skey, 
-                    QStringList syncKey) 
+void GetMsg::postHandler(QString host, 
+                         QString uin, 
+                         QString sid, 
+                         QString skey, 
+                         QStringList syncKey) 
 {
     m_skey = skey;
     QString ts = QString::number(time(NULL));
@@ -83,13 +134,13 @@ void GetMsg::m_post(QString host,
 
 void GetMsg::post(QString uin, QString sid, QString skey, QStringList syncKey) 
 {
-    m_post(WX_SERVER_HOST, uin, sid, skey, syncKey);
+    postHandler(WX_SERVER_HOST, uin, sid, skey, syncKey);
 }
 
 void GetMsg::postV2(QString uin, QString sid, QString skey, QStringList syncKey)
 {
     m_v2 = true;
-    m_post(WX_V2_SERVER_HOST, uin, sid, skey, syncKey);
+    postHandler(WX_V2_SERVER_HOST, uin, sid, skey, syncKey);
 }
 
 QString GetMsg::contentWithoutUserName(QString content) 
@@ -111,7 +162,7 @@ QString GetMsg::contentToUserName(QString content, QString oriUserName)
     return oriUserName;
 }
 
-void GetMsg::m_saveLog(QString createTimeStr, QString fromUserName, QString content) 
+void GetMsg::saveLog(QString createTimeStr, QString fromUserName, QString content) 
 {
     QFile file(QWXDIR + "/" + fromUserName + ".txt");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
@@ -121,11 +172,11 @@ void GetMsg::m_saveLog(QString createTimeStr, QString fromUserName, QString cont
     }
 }
 
-void GetMsg::m_handleNewMsg(QString msgId,
-                            QString content,
-                            QString fromUserNameStr,
-                            QString toUserNameStr,
-                            int createTime)
+void GetMsg::handleNewMsg(QString msgId,
+                          QString content,
+                          QString fromUserNameStr,
+                          QString toUserNameStr,
+                          int createTime)
 {
     if (msgId.isEmpty() || content.isEmpty())
         return;
@@ -134,15 +185,18 @@ void GetMsg::m_handleNewMsg(QString msgId,
 
     if (!m_map.contains(msgId)) {
         if (m_needSaveLog)
-            m_saveLog(createTimeStr, fromUserNameStr, content);
+            saveLog(createTimeStr, fromUserNameStr, content);
 
+        notificationDBusCall(m_contact->getNickName(fromUserNameStr), content);
         Q_EMIT newMsg(content, fromUserNameStr, toUserNameStr);
     }
 
     if ((fromUserNameStr == m_fromUserName && toUserNameStr == m_toUserName) ||
         (fromUserNameStr == m_toUserName && toUserNameStr == m_fromUserName)) {
-        if (!m_map.contains(msgId))
+        if (!m_map.contains(msgId)) {
+            notificationDBusCall(m_contact->getNickName(fromUserNameStr), content);
             Q_EMIT received(content, fromUserNameStr);
+        }
     }
 
     if (m_map.size() > 64) {
@@ -193,7 +247,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 connect(downLoad, &Download::finished, [=] {
                     content = "<img src=\"file://" + msgImgPath +
                         "\" width=\"128\" height=\"128\">";
-                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                    handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
@@ -207,7 +261,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 connect(downLoad, &Download::finished, [=] {
                     content = "<a href=\"file://" + msgVoicePath + "\">" +
                         i18n("Voice") + "</a>";
-                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                    handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
@@ -221,7 +275,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 connect(downLoad, &Download::finished, [=] {
                     content = "<a href=\"file://" + msgVideoPath + "\">" +
                         i18n("Video") + "</a>";
-                    m_handleNewMsg(msgId, content, fromUserNameStr,
+                    handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
                 });
@@ -238,7 +292,7 @@ void GetMsg::finished(QNetworkReply* reply)
             }
         }
 
-        m_handleNewMsg(msgId, content, fromUserNameStr, toUserNameStr, createTime);
+        handleNewMsg(msgId, content, fromUserNameStr, toUserNameStr, createTime);
     }
     
     m_syncKey.clear();

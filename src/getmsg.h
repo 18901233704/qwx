@@ -4,6 +4,7 @@
 #define GET_MSG_H
 
 #include "httppost.h"
+#include "contact.h"
 
 class GetMsg : public HttpPost 
 {
@@ -15,7 +16,7 @@ class GetMsg : public HttpPost
     Q_PROPERTY(bool needSaveLog READ needSaveLog WRITE setNeedSaveLog NOTIFY needSaveLogChanged)
 
 public:
-    GetMsg(HttpPost* parent = nullptr);
+    explicit GetMsg(HttpPost* parent = Q_NULLPTR);
     ~GetMsg();
 
     QString fromUserName() const { return m_fromUserName; }
@@ -39,6 +40,11 @@ public:
                             QStringList syncKey);
     Q_INVOKABLE QString contentWithoutUserName(QString content);
     Q_INVOKABLE QString contentToUserName(QString content, QString oriUserName);
+    Q_INVOKABLE void notificationDBusCall(const QString &title, 
+                                          const QString &body, 
+                                          const QString &iconName = "qwx",
+                                          bool persistent = false, 
+                                          const QStringList &actions = QStringList());
 
 Q_SIGNALS:
     void fromUserNameChanged();
@@ -54,17 +60,17 @@ protected:
     void finished(QNetworkReply* reply);
 
 private:
-    void m_saveLog(QString createTimeStr, QString fromUserName, QString content);
-    void m_post(QString host, 
-                QString uin, 
-                QString sid, 
-                QString skey, 
-                QStringList syncKey);
-    void m_handleNewMsg(QString msgId,
-                        QString content,
-                        QString fromUserNameStr,
-                        QString toUserNameStr,
-                        int createTime);
+    void saveLog(QString createTimeStr, QString fromUserName, QString content);
+    void postHandler(QString host, 
+                     QString uin, 
+                     QString sid, 
+                     QString skey, 
+                     QStringList syncKey);
+    void handleNewMsg(QString msgId,
+                      QString content,
+                      QString fromUserNameStr,
+                      QString toUserNameStr,
+                      int createTime);
 
 private:
     QString m_fromUserName = "";
@@ -74,6 +80,7 @@ private:
     bool m_needSaveLog = true;
     bool m_v2 = false;
     QString m_skey = "";
+    Contact *m_contact = Q_NULLPTR;
 };
 
 #endif // GET_MSG_H

@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <KLocalizedString>
 
@@ -93,7 +93,7 @@ QString Contact::getNickName(QString userName)
         if (contact->userName() == userName)
             return contact->nickName();
     }
-    return "";
+    return i18n("WeChat");
 }
 
 QString Contact::getHeadImgUrl(QString userName) 

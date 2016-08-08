@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #ifndef CONTACT_H
 #define CONTACT_H
@@ -13,7 +13,7 @@ class Contact : public HttpPost
     Q_PROPERTY(QList<QObject*> contactList READ contactList NOTIFY contactListChanged)
 
 public:
-    explicit Contact(HttpPost* parent = nullptr);
+    explicit Contact(HttpPost* parent = Q_NULLPTR);
     ~Contact();
 
     QList<QObject*> contactList() const { return m_contactList; }
