@@ -288,7 +288,7 @@ void GetMsg::finished(QNetworkReply* reply)
             } else if (msgType == 51) {
                 // TODO: you are tapping on your phone ;-)
             } else {
-                content = i18n("Unsupport MsgType %1").arg(msgType);
+                content = i18n("Unsupport MsgType %1", msgType);
             }
         }
 
