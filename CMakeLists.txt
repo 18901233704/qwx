@@ -42,7 +42,7 @@ if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     find_package(Qt5Test ${REQUIRED_QT_VERSION} REQUIRED)
 endif()
 
-find_package(KF5Prison)
+find_package(KF5Prison "1.2.2" EXACT QUIET CONFIG)
 set_package_properties(KF5Prison PROPERTIES DESCRIPTION "The KF5 Prison libraries"
                        URL "http://projects.kde.org/prison"
                        TYPE REQUIRED

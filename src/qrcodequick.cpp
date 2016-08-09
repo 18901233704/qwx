@@ -6,7 +6,7 @@
 QRcodeQuick::QRcodeQuick(QQuickItem* parent)
     : QQuickPaintedItem(parent), 
       m_code(""), 
-      m_barcode(new Prison::QRCodeBarcode)
+      m_barcode(Prison::createBarcode(Prison::QRCode))
 {
 }
 

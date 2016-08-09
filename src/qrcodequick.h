@@ -3,7 +3,7 @@
 #ifndef QRCODE_H
 #define QRCODE_H
 
-#include <prison/qrcodebarcode.h>
+#include <prison/Prison>
 
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
@@ -29,7 +29,7 @@ protected:
 
 private:
     QString m_code;
-    Prison::QRCodeBarcode* m_barcode;
+    Prison::AbstractBarcode* m_barcode;
 };
 
 #endif // QRCODE_H
