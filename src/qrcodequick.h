@@ -3,12 +3,10 @@
 #ifndef QRCODE_H
 #define QRCODE_H
 
-#include <Prison/Prison>
+#include <prison/qrcodebarcode.h>
 
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
-
-using namespace Prison;
 
 class QRcodeQuick : public QQuickPaintedItem 
 {
@@ -31,7 +29,7 @@ protected:
 
 private:
     QString m_code;
-    AbstractBarcode* m_barcode;
+    Prison::QRCodeBarcode* m_barcode;
 };
 
 #endif // QRCODE_H
