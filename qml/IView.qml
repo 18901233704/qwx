@@ -1,15 +1,16 @@
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 import QtQuick 2.2
+import cn.com.isoft.qwx 1.0
 import "global.js" as Global
 
 Item {
-	Image {
-		id: qrcodeImage
-		source: "http://qr.liantu.com/api.php?text=" + Global.loginNickName
-				+ "&logo=https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon64_wx_logo.png"
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.top: parent.top
-		anchors.topMargin: 31
-	}
+    id: iView
+    property QtObject qrcode: Qt.createQmlObject('import cn.com.isoft.qwx 1.0; QRcodeQuick { width: parent.width; height: parent.width }', iView, 'qrcodeObject');
+    
+    Component.onCompleted: {
+        if (qrcode) {
+            qrcode.code = Global.loginNickName;
+        }
+    }
 }

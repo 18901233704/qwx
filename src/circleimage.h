@@ -1,4 +1,7 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+
+#ifndef CIRCLEIMAGE_H
+#define CIRCLEIMAGE_H
 
 #include <QtQuick/QQuickPaintedItem>
 #include <QPainter>
@@ -31,3 +34,5 @@ private:
     QColor m_color;
     QString m_imageSource;
 };
+
+#endif // CIRCLEIMAGE_H

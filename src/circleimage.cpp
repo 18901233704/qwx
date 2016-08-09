@@ -1,4 +1,5 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2016 Yang Hong <yangh.cn@gmail.com>
 
 #include "circleimage.h"
 

@@ -7,6 +7,7 @@
 #include <KAboutData>
 
 #include <QCommandLineParser>
+#include <QDebug>
 
 int main(int argc, char* argv[]) 
 {                                                                        
@@ -18,6 +19,9 @@ int main(int argc, char* argv[])
     aboutData.addAuthor(i18n("Leslie Zhai"), i18n("Maintainer"), "xiang.zhai@i-soft.com.cn");
     aboutData.addAuthor(i18n("Leslie Zhai"), i18n("Developer"), "xiang.zhai@i-soft.com.cn");
     aboutData.addAuthor(i18n("Mingcong Bai"), i18n("Developer"), "jeffbai@aosc.xyz");
+#if KF5PRISON_FOUND
+    aboutData.addAuthor(i18n("Leslie Zhai"), i18n("KF5 Prison Maintainer"), "xiang.zhai@i-soft.com.cn");
+#endif
     KAboutData::setApplicationData(aboutData);
 
     app.setApplicationName(CODE_NAME);

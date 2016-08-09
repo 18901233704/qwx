@@ -36,10 +36,20 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 endif()
 
-find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets Qml Quick Network Xml QuickWidgets)
+find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS Core Widgets Qml Quick Network Xml QuickWidgets DBus)
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS I18n DBusAddons XmlGui Declarative)
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     find_package(Qt5Test ${REQUIRED_QT_VERSION} REQUIRED)
+endif()
+
+find_package(KF5Prison)
+set_package_properties(KF5Prison PROPERTIES DESCRIPTION "The KF5 Prison libraries"
+                       URL "http://projects.kde.org/projects/frameworks/prison"
+                       TYPE REQUIRED
+                       PURPOSE "prison is a barcode api currently offering a nice Qt api to produce QRCode barcodes and DataMatrix barcodes, and can easily be made support more."
+                      )
+if(KF5Prison_FOUND)
+    add_definitions("-DKF5PRISON_FOUND")
 endif()
 
 find_package(OpenMP)

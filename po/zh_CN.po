@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-08 11:14+0800\n"
+"POT-Creation-Date: 2016-08-09 10:19+0800\n"
 "PO-Revision-Date: 2016-08-05 17:00+0800\n"
 "Last-Translator: Leslie Zhai <xiang.zhai@i-soft.com.cn>\n"
 "Language-Team: KDE-cn <i18n@kde.org>\n"
@@ -60,6 +60,10 @@ msgstr "开发者"
 
 msgid "Mingcong Bai"
 msgstr ""
+
+#, fuzzy
+msgid "KF5 Prison Maintainer"
+msgstr "维护者"
 
 msgid "Send"
 msgstr "发送"

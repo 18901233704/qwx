@@ -7,7 +7,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_executable(kwx 
+set(kwx_SRCS 
     main.cpp
     kwxapp.cpp
     kwxwin.cpp
@@ -37,6 +37,13 @@ add_executable(kwx
     i18n.cpp
     clipboard.cpp
     uploadmedia.cpp
+)
+if(KF5Prison_FOUND)
+    set(kwx_SRCS ${kwx_SRCS} qrcodequick.cpp)
+endif()
+
+add_executable(kwx 
+    ${kwx_SRCS}
     ${kwx_RC_SRCS}
     ${kwx_DBUS_SRCS}
 )
@@ -54,5 +61,8 @@ target_link_libraries(kwx
     KF5::XmlGui
     KF5::Declarative
 )
+if(KF5Prison_FOUND)
+    target_link_libraries(kwx KF5::Prison)
+endif()
 
 install(TARGETS kwx RUNTIME DESTINATION bin)

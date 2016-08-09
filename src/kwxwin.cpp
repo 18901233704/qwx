@@ -41,6 +41,9 @@
 #include "weather.h"
 #include "i18n.h"
 #include "clipboard.h"
+#if KF5PRISON_FOUND
+#include "qrcodequick.h"
+#endif
 
 #include <KDeclarative/KDeclarative>
 
@@ -73,6 +76,9 @@ KwxWin::KwxWin(QWidget *parent)
     qmlRegisterType<IpCity>("cn.com.isoft.qwx", 1, 0, "IpCity");
     qmlRegisterType<Weather>("cn.com.isoft.qwx", 1, 0, "Weather");
     qmlRegisterType<Clipboard>("cn.com.isoft.qwx", 1, 0, "Clipboard");
+#if KF5PRISON_FOUND
+    qmlRegisterType<QRcodeQuick>("cn.com.isoft.qwx", 1, 0, "QRcodeQuick");
+#endif
 
     m_widget = new QQuickWidget(QUrl("qrc:/qml/main.qml"), parent);
     // To make QML code translatable, KDeclarative provides the same i18n() 
