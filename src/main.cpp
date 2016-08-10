@@ -27,6 +27,7 @@ int main(int argc, char* argv[])
     app.setApplicationName(CODE_NAME);
     app.setApplicationVersion(PROJECT_VERSION);
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    app.setWindowIcon(QIcon::fromTheme("kwx"));
 
     QCommandLineParser parser;
     parser.addHelpOption();

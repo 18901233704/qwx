@@ -1,14 +1,14 @@
 [Desktop Entry]
 Categories=Network;
-Comment[zh_CN]=微信Qt前端
-Comment=WeChat Qt frontend
-Exec=qwx
-GenericName[zh_CN]=微信Qt前端
-GenericName=WeChat Qt frontend
-Icon=qwx
+Comment[zh_CN]=微信KDE前端
+Comment=WeChat KDE frontend
+Exec=kwx
+GenericName[zh_CN]=微信KDE前端
+GenericName=WeChat KDE frontend
+Icon=kwx
 MimeType=
-Name[zh_CN]=微信Qt前端
-Name=WeChat Qt frontend
+Name[zh_CN]=微信KDE前端
+Name=WeChat KDE frontend
 Path=
 StartupNotify=true
 Terminal=false

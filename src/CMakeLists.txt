@@ -65,4 +65,5 @@ if(KF5Prison_FOUND)
     target_link_libraries(kwx KF5::Prison)
 endif()
 
-install(TARGETS kwx RUNTIME DESTINATION bin)
+install(TARGETS kwx DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(PROGRAMS kwx.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})

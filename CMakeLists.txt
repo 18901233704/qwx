@@ -67,6 +67,7 @@ endif()
 # Add subdirectories
 add_subdirectory(po)
 add_subdirectory(src)
+add_subdirectory(images)
 if(CMAKE_BUILD_TYPE MATCHES [Dd]ebug)
     add_subdirectory(tests)
 endif()
