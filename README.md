@@ -31,13 +31,13 @@ apktool d weixin610android540.apk
 而重要的逻辑层全部被封装成库lib/armeabi
 
 ```
-arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetwork.txt
+arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetwork.asm
 ```
 
 可以发现例如***Java_com_tencent_mm_network_Java2C_getNetworkServerIp***函数入口
 借助了java2c把Java项目“翻译”成了C/C++生成动态链接库，以防止反向工程？
 
 
-## 将 arm 二进制转换成 x86 架构
+## 借助 qemu-arm 二进制翻译 x86 架构
 
-[Intel 二进制翻译] (http://www.anandtech.com/show/5770/lava-xolo-x900-review-the-first-intel-medfield-phone/3)
+qemu-arm -L /system/bin/linker ./hello

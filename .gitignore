@@ -1,7 +1,6 @@
 *.pro.user
 moc_*
 qrc_*
-Makefile
 
 # Compiled Object files
 *.slo
