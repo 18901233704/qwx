@@ -40,4 +40,4 @@ arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetw
 
 ## 借助 qemu-arm 二进制翻译 x86 架构
 
-qemu-arm -L /system/bin/linker ./hello
+qemu-arm -L /usr/arm-linux-gnueabi/ [adrld](https://bitbucket.org/jigsaw_echo/adrld) ./hello
