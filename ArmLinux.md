@@ -1,7 +1,7 @@
 CC			= arm-linux-gnu-gcc
-CXX		 	= arm-linux-gnu-cpp
-CFLAGS		= -g -Wall
-CXXFLAGS	= -g -Wall
+CXX		 	= arm-linux-gnu-g++
+CFLAGS		= -g -Wall -std=gnu99
+CXXFLAGS	= -g -Wall -std=c++11
 CPATH		= -I/usr/arm-linux-gnu/include
 CXXPATH		= -I/usr/arm-linux-gnu/include
 LIBPATH		= -L/usr/arm-linux-gnu/lib
