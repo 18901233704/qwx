@@ -40,45 +40,14 @@ arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetw
 
 ## 借助 qemu-arm 二进制翻译 x86 架构
 
-qemu-arm -L /usr/arm-linux-gnueabi/ [adrld](https://bitbucket.org/jigsaw_echo/adrld) ./hello 
-
-不同的dynamic loader：
-
-### /system/bin/linker
-
 ```
-readelf --program-headers ./hello 
+make -f ArmLinux.md 依赖gcc-arm-linux-gnu、binutils-arm-linux-gnu、glibc-arm-linux-gnu-devel
 
-Elf 文件类型为 EXEC (可执行文件)
-入口点 0x82d0
-共有 7 个程序头，开始于偏移量52
-
-程序头：
-  類型           偏移量   虛擬位址   實體位址 檔案大小 記憶大小 旗標 對齊
-  PHDR           0x000034 0x00008034 0x00008034 0x000e0 0x000e0 R   0x4
-  INTERP         0x000114 0x00008114 0x00008114 0x00013 0x00013 R   0x1
-      [Requesting program interpreter: /system/bin/linker]
-  LOAD           0x000000 0x00008000 0x00008000 0x00390 0x00390 R E 0x1000
-  LOAD           0x000ee4 0x00009ee4 0x00009ee4 0x0011c 0x00120 RW  0x1000
-  DYNAMIC        0x000ef4 0x00009ef4 0x00009ef4 0x000e0 0x000e0 RW  0x4
-  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0
-  GNU_RELRO      0x000ee4 0x00009ee4 0x00009ee4 0x0011c 0x0011c RW  0x4
-
- 區段到節區映射中:
-  段节...
-   00     
-   01     .interp 
-   02     .interp .dynsym .dynstr .hash .gnu.version .gnu.version_r .rel.plt .plt .text .rodata .note.android.ident 
-   03     .fini_array .init_array .preinit_array .dynamic .got .bss 
-   04     .dynamic 
-   05     
-   06     .fini_array .init_array .preinit_array .dynamic .got
+qemu-arm -L /usr/arm-linux-gnu ./hello 
 ```
 
-### /lib64/ld-linux-x86-64.so.2 
+或
 
 ```
-readelf --program-header /usr/bin/ls
+make -f Android.mk 上传到手机
 ```
-
-如何修改ELF的.interp段？
