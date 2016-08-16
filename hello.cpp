@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
@@ -13,13 +12,13 @@ int main(int argc, char *argv[])
     char *error = NULL;
 
     if (getcwd(buf, sizeof(buf)) == NULL) {
-        std::cout << "ERROR: fail to getcwd " << strerror(errno) << std::endl;
+        printf("ERROR: fail to getcwd %s\n", strerror(errno));
     }
 
     handle = dlopen(argv[1] ? argv[1] : "libwechatnetwork.so", RTLD_LAZY);
     if (!handle) {
         error = dlerror();
-        std::cout << "ERROR: fail to dlopen " << error << std::endl;
+        printf("ERROR: fail to dlopen %s\n", error);
         goto cleanup;
     }
 

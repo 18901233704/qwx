@@ -7,11 +7,15 @@ CXXPATH		= -I/usr/arm-linux-gnu/include
 LIBPATH		= -L/usr/arm-linux-gnu/lib
 LIBS		= -nostdlib /usr/arm-linux-gnu/lib/crt1.o /usr/arm-linux-gnu/lib/crti.o /usr/arm-linux-gnu/lib/crtn.o -lc -ldl
 
-all: hello
+all: hello hello-cpp
 
 hello:
 	$(CC) -o hello.o -c $(CFLAGS) $(CPATH) hello.c
 	$(CC) -o hello hello.o $(LIBPATH) $(LIBS)
 
+#hello-cpp:
+#    $(CXX) -o hello-cpp.o -c $(CXXFLAGS) $(CXXPATH) hello.cpp
+#    $(CXX) -o hello-cpp hello-cpp.o $(LIBPATH) $(LIBS)
+
 clean: 
-	rm -rf *.o hello
+	rm -rf *.o hello hello-cpp
