@@ -1,11 +1,11 @@
 CC			= arm-linux-gnu-gcc
 CXX		 	= arm-linux-gnu-cpp
-CFLAGS		= -g -fno-short-enums
-CXXFLAGS	= -g -fno-short-enums
+CFLAGS		= -g -Wall
+CXXFLAGS	= -g -Wall
 CPATH		= -I/usr/arm-linux-gnu/include
 CXXPATH		= -I/usr/arm-linux-gnu/include
-LIBPATH		= -Wl,-rpath-link=/usr/arm-linux-gnu/lib -L/usr/arm-linux-gnu/lib
-LIBS		= -nostdlib -lgcc -lg -lc -lm
+LIBPATH		= -L/usr/arm-linux-gnu/lib
+LIBS		= -nostdlib /usr/arm-linux-gnu/lib/crt1.o /usr/arm-linux-gnu/lib/crti.o /usr/arm-linux-gnu/lib/crtn.o -lc -ldl
 
 all: hello
 
