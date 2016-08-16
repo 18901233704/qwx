@@ -8,7 +8,7 @@ ANDROID_NDK_HOST := linux-x86_64
 ANDROID_SDK_ROOT := $(ROOT)/android-sdk-linux_86
 PREBUILD := $(ANDROID_NDK_ROOT)/toolchains/arm-linux-androideabi-4.9/prebuilt/$(ANDROID_NDK_HOST)
 
-BIN := $(PREBUILD)/bin/
+BIN := $(PREBUILD)/bin
 LIB := $(ANDROID_NDK_ROOT)/platforms/android-$(NDK_PLATFORM_VER)/arch-arm/usr/lib
 INCLUDE := $(ANDROID_NDK_ROOT)/platforms/android-$(NDK_PLATFORM_VER)/arch-arm/usr/include
 
