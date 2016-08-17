@@ -2,7 +2,6 @@
 #include <dlfcn.h>
 
 void (*sayHello)(int, char**);
-void (*sayHelloNoP)();
 
 int main(int argc, char *argv[]) 
 {
@@ -10,13 +9,18 @@ int main(int argc, char *argv[])
     char *error = NULL;
 
     printf("Hello World\n");
-
+#ifdef ANDROID
+    handle = dlopen(argv[1] ? argv[1] : "/data/local/tmp/libLeslie.so", RTLD_LAZY);
+#else
     handle = dlopen(argv[1] ? argv[1] : "libLeslie.so", RTLD_LAZY);
+#endif
     if (!handle) {
         error = dlerror();
         printf("ERROR: fail to dlopen %s\n", error);
         goto cleanup;
     }
+
+    error = dlerror();
 
     sayHello = (void (*)(int, char**)) dlsym(handle, "sayHello");
     error = dlerror();
@@ -26,17 +30,9 @@ int main(int argc, char *argv[])
     }
     (*sayHello)(argc, argv);
 
-    sayHelloNoP = (void (*)()) dlsym(handle, "sayHello");
-    error = dlerror();
-    if (error) {
-        printf("ERROR: fail to dlsym %s\n", error);
-        goto cleanup;
-    }
-    (*sayHelloNoP)();
-
 cleanup:
     if (handle) {
-        dlclose(handle);
+        //dlclose(handle);
         handle = NULL;
     }
 

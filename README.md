@@ -44,6 +44,7 @@ arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetw
 make -f ArmLinux.md 依赖gcc-arm-linux-gnu、binutils-arm-linux-gnu、glibc-arm-linux-gnu-devel
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/download/android-ndk-r12b/platforms/android-19/arch-arm/usr/lib
 qemu-arm -L /usr/arm-linux-gnu ./hello 
 ```
 
