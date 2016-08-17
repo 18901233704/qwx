@@ -1,4 +1,3 @@
-APP := hello
 ROOT := /data/download
 INSTALL_DIR := /data/tmp
 NDK_PLATFORM_VER := 19
@@ -13,6 +12,7 @@ LIB := $(ANDROID_NDK_ROOT)/platforms/android-$(NDK_PLATFORM_VER)/arch-arm/usr/li
 INCLUDE := $(ANDROID_NDK_ROOT)/platforms/android-$(NDK_PLATFORM_VER)/arch-arm/usr/include
 
 CC := $(BIN)/arm-linux-androideabi-gcc
+CXX := $(BIN)/arm-linux-androideabi-g++
 GDB_CLIENT := $(BIN)/arm-linux-androideabi-gdb
 
 LIBCRT := $(LIB)/crtbegin_dynamic.o
@@ -21,35 +21,20 @@ LINKER := /system/bin/linker
 
 DEBUG := -g
 
-CFLAGS := $(DEBUG) -fno-short-enums -I$(INCLUDE)
+CFLAGS := $(DEBUG) -fno-short-enums -fpermissive -I$(INCLUDE)
 CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB)
-CFLAGS += -nostdlib -lc
+CFLAGS += -nostdlib -lc -lgcc -ldl
 
-all: $(APP)
+all: hello hello-cpp libLeslie.so
 
-$(APP): $(APP).c
+hello: hello.c
 	$(CC) -o $@ $< $(CFLAGS) $(LIBCRT)
 
-install: $(APP)
-	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(APP) $(INSTALL_DIR)/$(APP)
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/$(APP)
+hello-cpp: hello.cpp
+	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT)
 
-shell:
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell
-
-run:
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell $(INSTALL_DIR)/$(APP)
-
-debug-install:
-	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(PREBUILD)/../gdbserver $(INSTALL_DIR)/gdbserver
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell chmod 777 $(INSTALL_DIR)/gdbserver
-
-debug-go:
-	$(ANDROID_SDK_ROOT)/platform-tools/adb forward tcp:1234: tcp:1234
-	$(ANDROID_SDK_ROOT)/platform-tools/adb shell $(INSTALL_DIR)/gdbserver :1234 $(INSTALL_DIR)/$(APP)
-
-debug:
-	$(GDB_CLIENT) $(APP)
+libLeslie.so: libLeslie.cpp
+	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT) -shared
 
 clean:
-	@rm -f $(APP).o $(APP)
+	@rm -f *.o hello libLeslie.so

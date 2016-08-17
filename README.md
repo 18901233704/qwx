@@ -43,6 +43,7 @@ arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetw
 ```
 make -f ArmLinux.md 依赖gcc-arm-linux-gnu、binutils-arm-linux-gnu、glibc-arm-linux-gnu-devel
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./
 qemu-arm -L /usr/arm-linux-gnu ./hello 
 ```
 
@@ -50,4 +51,8 @@ qemu-arm -L /usr/arm-linux-gnu ./hello
 
 ```
 make -f Android.mk 上传到手机
+```
+
+```
+readelf -a libwechatnetwork.so > libwechatnetwork.re
 ```
