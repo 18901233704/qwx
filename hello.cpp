@@ -1,39 +1,56 @@
 #include <stdio.h>
+#include <string.h>
 #include <dlfcn.h>
+
+#ifdef QWX_ANDROID
+#include <jni.h>
+#endif
 
 void (*sayHello)(int, char**);
 
-char* (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)();
+#ifdef QWX_ANDROID
+jstring (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)(JNIEnv*, jclass);
+#endif
 
-int main(int argc, char *argv[]) 
+int main(int argc, char* argv[])
 {
-    void *handle = NULL;
-    char *error = NULL;
+    const char *libFilename = NULL;
+    void* handle = NULL;
+    char* error = NULL;
 
-    handle = dlopen(argv[1] ? argv[1] : "/data/local/tmp/libwechatnetwork.so", RTLD_LAZY);
+    libFilename = argv[1] ? argv[1] : "libwechatnetwork.so";
+    handle = dlopen(libFilename, RTLD_LAZY);
     if (!handle) {
-        error = dlerror();
+        error = (char*) dlerror();
         printf("ERROR: fail to dlopen %s\n", error);
         goto cleanup;
     }
-    printf("DEBUG: lazy binding libwechatnetwork.so\n");
+    printf("DEBUG: lazy binding %s\n", libFilename);
 
-    error = dlerror();
+    error = (char*) dlerror();
 
-    Java_com_tencent_mm_network_Java2C_getNetworkServerIp = (char* (*)()) dlsym(handle, "Java_com_tencent_mm_network_Java2C_getNetworkServerIp");
-    error = dlerror();
-    if (error) {
-        printf("ERROR: fail to dlsym %s\n", error);
-        goto cleanup;
+    sayHello = (void (*)(int, char**)) dlsym(handle, "sayHello");
+    error = (char*) dlerror();
+    if (!error) {
+        printf("DEBUG: try to calling sayHello\n");
+        (*sayHello)(argc, argv);
     }
-    printf("DEBUG: try to calling Java_com_tencent_mm_network_Java2C_getNetworkServerIp\n");
-    (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)();
+
+#ifdef QWX_ANDROID
+    Java_com_tencent_mm_network_Java2C_getNetworkServerIp = (jstring (*)(JNIEnv*, jclass)) dlsym(handle, "Java_com_tencent_mm_network_Java2C_getNetworkServerIp");
+    error = (char*) dlerror();
+    if (!error) {
+        printf("DEBUG: try to calling Java_com_tencent_mm_network_Java2C_getNetworkServerIp\n");
+        printf("DEBUG: %s\n", (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)(NULL, NULL));
+    }
+#endif
 
 cleanup:
     if (handle) {
         dlclose(handle);
         handle = NULL;
     }
+    printf("Bye ;-)\n");
 
     return 0;
 }

@@ -22,8 +22,8 @@ LINKER := /system/bin/linker
 
 DEBUG := -g
 
-CFLAGS := $(DEBUG) -fno-short-enums -fpermissive -I$(INCLUDE)
-CFLAGS += -DANDROID -DINSTALL_DIR=$(INSTALL_DIR)
+CFLAGS := $(DEBUG) -fno-short-enums -I$(INCLUDE)
+CFLAGS += -DQWX_ANDROID -DINSTALL_DIR=$(INSTALL_DIR)
 CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB)
 CFLAGS += -nostdlib -lc -lgcc -ldl
 

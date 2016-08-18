@@ -6,10 +6,13 @@
 extern "C" {
 #endif
 
+#ifdef QWX_ANDROID
 int main(int argc, char* argv[]) 
 {
+    printf("DEBUG: %s, %s, line %d\n", __FILE__, __func__, __LINE__);
     return 0;
 }
+#endif
 
 void LIBLESLIE_EXPORTED sayHello(int argc, char* argv[]) 
 {

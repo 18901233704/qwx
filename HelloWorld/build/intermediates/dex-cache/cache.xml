@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/libs/internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/internal_impl-23.4.0_bb0337b94e4b3a58350c3a60a803ea1bce357be5.jar" />
+    </item>
+    <item
+        jar="/data/download/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/23.4.0/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/support-annotations-23.4.0_f8b16ad69597a9c80c8c3027e179278a97cc3678.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="8bc134f66142836239ae951b6e729300201891a0">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/instant-run_64572f64bfc3706972380f584c3f517edc6c48b7.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="eca35506ce7671f47beba37f830bb4849ff96a1c">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_f29c23959f63c42c7060e6d238abbfaf2193b155.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_bc1e945b8dd59c99fd0bd1a62826ca61ad944429.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_fd55439f4af403bcc5a48e8f23a9fe8141e6e8e5.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_9caedbeca9aa921796ee248b42af575918f20fc4.jar" />
+    </item>
+    <item
+        jar="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.1"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="/data/project/xiangzhai/qwx/HelloWorld/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.4.0_93c3ae581f6e708b16a50fd0b95b9bb899a28feb.jar" />
+    </item>
+
+</items>

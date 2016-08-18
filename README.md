@@ -34,10 +34,6 @@ apktool d weixin610android540.apk
 arm-linux-androideabi-objdump -d lib/armeabi/libwechatnetwork.so > libwechatnetwork.asm
 ```
 
-可以发现例如***Java_com_tencent_mm_network_Java2C_getNetworkServerIp***函数入口
-借助了java2c把Java项目“翻译”成了C/C++生成动态链接库，以防止反向工程？
-
-
 ## 借助 qemu-arm 二进制翻译 x86 架构
 
 ```
@@ -54,6 +50,6 @@ qemu-arm -L /usr/arm-linux-gnu ./hello
 make -f Android.mk 上传到手机
 ```
 
-```
-readelf -a libwechatnetwork.so > libwechatnetwork.re
-```
+## JNIEnv*
+
+参考[JNI](https://developer.android.com/training/articles/perf-jni.html)、[hello-jni](https://developer.android.com/ndk/samples/sample_hellojni.html)
