@@ -4,6 +4,6 @@ public class Java2C {
     public native String getNetworkServerIp();
 
     static {
-        System.loadLibrary("libwechatnetwork.so");
+        System.loadLibrary("wechatnetwork");
     }
 }
