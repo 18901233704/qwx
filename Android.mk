@@ -27,7 +27,7 @@ CFLAGS += -DQWX_ANDROID -DINSTALL_DIR=$(INSTALL_DIR)
 CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB) -L$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/libs/armeabi
 CFLAGS += -nostdlib -lc -lgcc -lstlport_shared -ldl
 
-all: hello hello-cpp libLeslie.so
+all: hello hello-cpp libLeslie.so libWechatWrapper.so
 
 hello: hello.c
 	$(CC) -o $@ $< $(CFLAGS) $(LIBCRT)
@@ -36,6 +36,9 @@ hello-cpp: hello.cpp
 	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT)
 
 libLeslie.so: libLeslie.cpp
+	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT) -shared
+
+libWechatWrapper.so: libWechatWrapper.cpp
 	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT) -shared
 
 install: $(APP)
@@ -60,4 +63,4 @@ debug:
 	$(GDB_CLIENT) $(APP)
 
 clean:
-	@rm -f *.o hello hello-cpp libLeslie.so
+	@rm -f *.o hello hello-cpp libLeslie.so libWechatWrapper.so
