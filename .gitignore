@@ -30,3 +30,7 @@ qrc_*
 *.exe
 *.out
 *.app
+
+.gradle
+.idea
+app.iml

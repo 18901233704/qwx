@@ -22,10 +22,10 @@ LINKER := /system/bin/linker
 
 DEBUG := -g
 
-CFLAGS := $(DEBUG) -fno-short-enums -I$(INCLUDE)
+CFLAGS := $(DEBUG) -fno-short-enums -I$(INCLUDE) -I$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/stlport
 CFLAGS += -DQWX_ANDROID -DINSTALL_DIR=$(INSTALL_DIR)
-CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB)
-CFLAGS += -nostdlib -lc -lgcc -ldl
+CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB) -L$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/libs/armeabi
+CFLAGS += -nostdlib -lc -lgcc -lstlport_shared -ldl
 
 all: hello hello-cpp libLeslie.so
 
@@ -60,4 +60,4 @@ debug:
 	$(GDB_CLIENT) $(APP)
 
 clean:
-	@rm -f *.o hello libLeslie.so
+	@rm -f *.o hello hello-cpp libLeslie.so

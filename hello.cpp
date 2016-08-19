@@ -3,6 +3,7 @@
 #include <dlfcn.h>
 
 #ifdef QWX_ANDROID
+#include <iostream>
 #include <jni.h>
 #endif
 
@@ -40,8 +41,10 @@ int main(int argc, char* argv[])
     Java_com_tencent_mm_network_Java2C_getNetworkServerIp = (jstring (*)(JNIEnv*, jclass)) dlsym(handle, "Java_com_tencent_mm_network_Java2C_getNetworkServerIp");
     error = (char*) dlerror();
     if (!error) {
-        printf("DEBUG: try to calling Java_com_tencent_mm_network_Java2C_getNetworkServerIp\n");
-        printf("DEBUG: %s\n", (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)(NULL, NULL));
+        std::cout << "DEBUG: try to calling Java_com_tencent_mm_network_Java2C_getNetworkServerIp" << std::endl;
+        // FIXME: How to obtain JNI interface pointer (JNIEnv *)
+        // but it is of course able to System.loadLibrary for com/tencent/mm/network/Java2C class
+        std::cout << "DEBUG: " << (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)(new JNIEnv, NULL) << std::endl;
     }
 #endif
 
