@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView objHelloTextView = (TextView) findViewById(R.id.helloTextView);
         WechatWrapper objWechatWrapper = new WechatWrapper();
-        objHelloTextView.setText(objWechatWrapper.getNetworkServerIp());
+        String networkServerIp = objWechatWrapper.getNetworkServerIp();
+        objHelloTextView.setText("DEBUG: networkServerIp " + networkServerIp);
     }
 }
