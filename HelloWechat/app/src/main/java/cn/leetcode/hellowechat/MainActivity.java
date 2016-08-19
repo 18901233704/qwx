@@ -1,10 +1,10 @@
-package cn.leetcode.helloleslie;
+package cn.leetcode.hellowechat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import cn.leetcode.helloleslie.HelloLeslie;
+import cn.leetcode.hellowechat.WechatWrapper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView objHelloTextView = (TextView) findViewById(R.id.helloTextView);
-        HelloLeslie objHelloLeslie = new HelloLeslie();
-        String hello = objHelloLeslie.sayHello();
-        objHelloTextView.setText("DEBUG: lazy binding libLeslie.so... then try to calling sayHello\n\r" + hello);
+        WechatWrapper objWechatWrapper = new WechatWrapper();
+        objHelloTextView.setText(objWechatWrapper.getNetworkServerIp());
     }
 }

@@ -22,7 +22,7 @@ LINKER := /system/bin/linker
 
 DEBUG := -g
 
-CFLAGS := $(DEBUG) -fno-short-enums -I$(INCLUDE) -I$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/stlport
+CFLAGS := $(DEBUG) -fno-short-enums -fPIC -I$(INCLUDE) -I$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/stlport
 CFLAGS += -DQWX_ANDROID -DINSTALL_DIR=$(INSTALL_DIR)
 CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB) -L$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/libs/armeabi
 CFLAGS += -nostdlib -lc -lgcc -lstlport_shared -ldl
@@ -36,10 +36,10 @@ hello-cpp: hello.cpp
 	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT)
 
 libLeslie.so: libLeslie.cpp
-	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT) -shared
+	$(CXX) -o $@ $< $(CFLAGS) -shared
 
 libWechatWrapper.so: libWechatWrapper.cpp
-	$(CXX) -o $@ $< $(CFLAGS) $(LIBCRT) -shared
+	$(CXX) -o $@ $< $(CFLAGS) -shared
 
 install: $(APP)
 	$(ANDROID_SDK_ROOT)/platform-tools/adb push $(APP) $(INSTALL_DIR)/$(APP)

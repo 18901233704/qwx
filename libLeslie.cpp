@@ -16,13 +16,6 @@ JNIEXPORT jstring Java_cn_leetcode_helloleslie_HelloLeslie_sayHello(JNIEnv* env,
 {
     return env->NewStringUTF("Hello World by Leslie");
 }
-
-// TODO: it needs entry point when Android NDK dlopen this shared library
-int main(int argc, char* argv[]) 
-{
-    std::cout << "DEBUG: " << __FILE__ << " " << __PRETTY_FUNCTION__ << " " << __LINE__ << std::endl;
-    return 0;
-}
 #else
 void LIBLESLIE_EXPORTED sayHello(int argc, char* argv[]) 
 {
