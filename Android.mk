@@ -25,7 +25,7 @@ DEBUG := -g
 CFLAGS := $(DEBUG) -fno-short-enums -fPIC -I$(INCLUDE) -I$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/stlport
 CFLAGS += -DQWX_ANDROID -DINSTALL_DIR=$(INSTALL_DIR)
 CFLAGS += -Wl,-rpath-link=$(LIB),-dynamic-linker=$(LINKER) -L$(LIB) -L$(ANDROID_NDK_ROOT)/sources/cxx-stl/stlport/libs/armeabi
-CFLAGS += -nostdlib -lc -lgcc -lstlport_shared -ldl
+CFLAGS += -nostdlib -lc -ldl -lstlport_shared
 
 all: hello hello-cpp libLeslie.so libWechatWrapper.so
 
