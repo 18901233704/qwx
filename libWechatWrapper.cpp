@@ -10,13 +10,12 @@ extern "C" {
 
 jstring (*Java_com_tencent_mm_network_Java2C_getNetworkServerIp)(JNIEnv*, jclass);
 
-JNIEXPORT jstring Java_cn_leetcode_hellowechat_WechatWrapper_getNetworkServerIp(JNIEnv* env, jobject thiz) 
+JNIEXPORT jstring JNICALL Java_cn_leetcode_hellowechat_WechatWrapper_getNetworkServerIp(JNIEnv* env, jobject thiz) 
 {
     void* handle = NULL;
     char *error = NULL;
     jstring ret;
 
-    try {
     handle = dlopen("libwechatnetwork.so", RTLD_LAZY);
     if (handle) {
         error = (char*) dlerror();
@@ -31,9 +30,7 @@ JNIEXPORT jstring Java_cn_leetcode_hellowechat_WechatWrapper_getNetworkServerIp(
     } else {
         ret = env->NewStringUTF("fail to dlopen");
     }
-    } catch (...) {
-        ret = env->NewStringUTF("Oops!");
-    }
+
     return ret;
 }
 

@@ -12,7 +12,7 @@ extern "C" {
 
 #ifdef QWX_ANDROID
 // TODO: JNI https://en.wikipedia.org/wiki/Java_Native_Interface
-JNIEXPORT jstring Java_cn_leetcode_helloleslie_HelloLeslie_sayHello(JNIEnv* env, jobject thiz) 
+JNIEXPORT jstring JNICALL Java_cn_leetcode_helloleslie_HelloLeslie_sayHello(JNIEnv* env, jobject thiz) 
 {
     return env->NewStringUTF("Hello World by Leslie");
 }
