@@ -245,7 +245,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 Download *downLoad = new Download;
                 downLoad->get(url, msgImgPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
-                    content = "<img src=\"file://" + msgImgPath +
+                    QString content = "<img src=\"file://" + msgImgPath +
                         "\" width=\"128\" height=\"128\">";
                     handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
@@ -259,7 +259,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 Download *downLoad = new Download;
                 downLoad->get(url, msgVoicePath, true, false);
                 connect(downLoad, &Download::finished, [=] {
-                    content = "<a href=\"file://" + msgVoicePath + "\">" +
+                    QString content = "<a href=\"file://" + msgVoicePath + "\">" +
                         i18n("Voice") + "</a>";
                     handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
@@ -273,7 +273,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 Download *downLoad = new Download;
                 downLoad->get(url, msgVideoPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
-                    content = "<a href=\"file://" + msgVideoPath + "\">" +
+                    QString content = "<a href=\"file://" + msgVideoPath + "\">" +
                         i18n("Video") + "</a>";
                     handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
