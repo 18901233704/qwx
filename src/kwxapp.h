@@ -25,6 +25,8 @@
 
 #include "kwxwin.h"
 
+class KDBusService;
+
 class KwxApp : public QApplication
 {
     Q_OBJECT
@@ -39,7 +41,8 @@ public Q_SLOTS:
     Q_SCRIPTABLE void quit();
 
 private:
-    KwxWin* window = Q_NULLPTR; 
+    KwxWin* window = Q_NULLPTR;
+    KDBusService* service = Q_NULLPTR;
 };
 
 #endif  // KWXAPP_H

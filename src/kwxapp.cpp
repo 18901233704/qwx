@@ -26,7 +26,7 @@ KwxApp::KwxApp(int& argc, char* argv[])
     : QApplication(argc, argv)
 {
     setOrganizationDomain("isoftlinux.org");
-    KDBusService* service = new KDBusService(KDBusService::Unique, this);
+    service = new KDBusService(KDBusService::Unique, this);
     QObject::connect(service, &KDBusService::activateRequested, this, [=]() {
         if (window) window->activateWindow();
     });
@@ -34,6 +34,11 @@ KwxApp::KwxApp(int& argc, char* argv[])
 
 KwxApp::~KwxApp()
 {
+    if (service) {
+        QObject::disconnect(service);
+        delete service;
+        service = Q_NULLPTR;
+    }
 }
 
 void KwxApp::setMainWindow(KwxWin* main)

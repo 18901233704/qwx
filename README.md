@@ -21,13 +21,13 @@ sudo pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects k
 sudo apt-get install qtdeclarative5-dev qt5-default qml-module-qtquick-controls qtdeclarative5-controls-plugin
 ```
 
-### Build for Debug
+### Build for Static Analyzing code
 ```
-mkdir build
-cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
+mkdir scan-build
+cd scan-build
+scan-build -k -v -V cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
     -DCMAKE_BUILD_TYPE=Debug
-make
+scan-build -k -v -V make -j 4
 gdb ./src/kwx
 r
 ```
