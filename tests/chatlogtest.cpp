@@ -28,7 +28,8 @@ ChatLogTest::ChatLogTest(QObject *parent)
 {
     m_chatLogPtr->load("weixin");
     // QSharedPointer<ChatLogObject> can not be invoked by QML...
-    Q_FOREACH (ChatLogObject *chatLogObjPtr, m_chatLogPtr->chatLogList()) {
+    Q_FOREACH (QObject* obj, m_chatLogPtr->chatLogList()) {
+        ChatLogObject* chatLogObjPtr = (ChatLogObject *)obj;
         qDebug() << chatLogObjPtr->userName() << chatLogObjPtr->content();
     }
 }

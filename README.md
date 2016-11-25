@@ -26,6 +26,8 @@ sudo apt-get install qtdeclarative5-dev qt5-default qml-module-qtquick-controls 
 mkdir scan-build
 cd scan-build
 scan-build -k -v -V cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
+    -DCMAKE_CXX_COMPILER=clang++    \
+    -DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -Wall -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fPIE -g" \
     -DCMAKE_BUILD_TYPE=Debug
 scan-build -k -v -V make -j 4
 gdb ./src/kwx

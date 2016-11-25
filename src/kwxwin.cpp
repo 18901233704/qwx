@@ -103,6 +103,8 @@ KwxWin::KwxWin(QWidget *parent)
 
 KwxWin::~KwxWin() 
 {
-    delete m_widget;
-    m_widget = Q_NULLPTR;
+    if (m_widget) {
+        delete m_widget;
+        m_widget = Q_NULLPTR;
+    }
 }
