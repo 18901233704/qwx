@@ -12,7 +12,7 @@ images and protocol ***Copyright (C) by [Tencent](http://weixin.qq.com/)***
 ### Dependences for ArchLinux
 
 ```
-sudo pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects ki18n kdbusaddons kxmlgui kdeclarative 
+sudo pacman -S cmake llvm qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects ki18n kdbusaddons kxmlgui kdeclarative 
 ```
 
 ### Dependences for Ubuntu 15.04+
@@ -30,9 +30,6 @@ scan-build -k -v -V cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
     -DECM_ENABLE_SANITIZERS='address;leak;undefined'    \
     -DCMAKE_BUILD_TYPE=Debug
 scan-build -k -v -V make -j 4
-gdb ./src/kwx
+lldb ./src/kwx
 r
 ```
-
-## Robot 小逗比机器人
-聊天状态下输入***小逗比出来***即可换出[聊天机器人](http://www.xiaodoubi.com/)
