@@ -21,7 +21,7 @@ sudo pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects k
 sudo apt-get install qtdeclarative5-dev qt5-default qml-module-qtquick-controls qtdeclarative5-controls-plugin
 ```
 
-### Build for Static Analyzing code
+### Build for Static/Sanitizer Analyzing code
 ```
 mkdir scan-build
 cd scan-build
