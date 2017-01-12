@@ -12,24 +12,28 @@ images and protocol ***Copyright (C) by [Tencent](http://weixin.qq.com/)***
 ### Dependences for ArchLinux
 
 ```
-sudo pacman -S cmake llvm qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects ki18n kdbusaddons kxmlgui kdeclarative 
+sudo pacman -S cmake qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects ki18n kdbusaddons kxmlgui kdeclarative prison(OPTIONAL) openmp(OPTIONAL) llvm(OPTIONAL) 
 ```
 
-### Dependences for Ubuntu 15.04+
-
-```
-sudo apt-get install qtdeclarative5-dev qt5-default qml-module-qtquick-controls qtdeclarative5-controls-plugin
-```
-
-### Build for Static/Sanitizer Analyzing code
+### Build for Analyzer
 ```
 mkdir scan-build
 cd scan-build
-scan-build -k -v -V cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
+scan-build -k -v cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
+    -DCMAKE_BUILD_TYPE=Debug
+scan-build -k -v -v -v -V make -j4
+```
+
+### Build for Sanitizer
+```
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr    \
     -DCMAKE_CXX_COMPILER=clang++    \
     -DECM_ENABLE_SANITIZERS='address;leak;undefined'    \
     -DCMAKE_BUILD_TYPE=Debug
-scan-build -k -v -V make -j 4
-lldb ./src/kwx
+make -j4
+lldb ./src/kwx 
 r
 ```
+

@@ -46,7 +46,7 @@ endif()
 find_package(KF5Prison ${KF5_DEP_VERSION})
 set_package_properties(KF5Prison PROPERTIES DESCRIPTION "The KF5 Prison libraries"
                        URL "http://projects.kde.org/prison"
-                       TYPE REQUIRED
+                       TYPE OPTIONAL
                        PURPOSE "prison is a barcode api currently offering a nice Qt api to produce QRCode barcodes and DataMatrix barcodes, and can easily be made support more."
                       )
 if(KF5Prison_FOUND)
