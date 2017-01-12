@@ -28,9 +28,17 @@ macro(QWX_EXECUTABLE_TESTS)
     endforeach()
 endmacro(QWX_EXECUTABLE_TESTS)
 
-QWX_EXECUTABLE_TESTS(
-    uploadmediatest
-    cookietest
-    chatlogtest
-    qwxuuidtest
-)
+if(OPENMP_FOUND)
+    QWX_EXECUTABLE_TESTS(
+        uploadmediatest
+        cookietest
+        chatlogtest
+        qwxuuidtest
+    )
+else()
+    QWX_EXECUTABLE_TESTS(
+        cookietest
+        chatlogtest
+        qwxuuidtest
+    )
+endif()
