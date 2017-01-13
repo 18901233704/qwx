@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QNetworkCookie>
@@ -9,14 +9,14 @@
 HttpPost::HttpPost(QObject* parent) 
   : QObject(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 HttpPost::~HttpPost() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }

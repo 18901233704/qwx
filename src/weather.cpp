@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QJsonDocument>                                                           
 #include <QJsonObject>
@@ -13,14 +13,14 @@ Weather::Weather(HttpGet* parent)
   : HttpGet(parent), 
     m_city("")
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Weather::~Weather() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -29,7 +29,7 @@ void Weather::get(QString city)
 {
     m_city = city;
     QString url = QString(WEATHER_URL).arg(m_city);
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url); 
@@ -41,7 +41,7 @@ void Weather::finished(QNetworkReply* reply)
     QJsonDocument doc = QJsonDocument::fromJson(replyStr.toUtf8());
     QString pm25Str = "";
     QString curTempStr = "";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << replyStr;
 #endif
@@ -49,7 +49,7 @@ void Weather::finished(QNetworkReply* reply)
     QJsonObject root = doc.object();
     QJsonObject result = root["results"].toArray().at(0).toObject();
     pm25Str = result["pm25"].toString();
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << pm25Str;
 #endif
     QJsonObject weather = result["weather_data"].toArray().at(0).toObject();
@@ -58,7 +58,7 @@ void Weather::finished(QNetworkReply* reply)
         int index = weatherDate.indexOf(REALTIME_TEMP);
         curTempStr = weatherDate.mid(index, weatherDate.size() - index - 1);
     }
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << curTempStr;
 #endif
     Q_EMIT weatherChanged(m_city + "，PM 2.5：" + pm25Str + "，" + curTempStr + 

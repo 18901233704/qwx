@@ -8,7 +8,7 @@
 Emotion::Emotion(QObject* parent)
   : QAbstractListModel(parent) 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     QFile file(":/images/emotion.txt");
@@ -26,7 +26,7 @@ Emotion::Emotion(QObject* parent)
 
 Emotion::~Emotion() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QDir>
@@ -14,14 +14,14 @@
 Cookie::Cookie(HttpGet* parent) 
   : HttpGet(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Cookie::~Cookie() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -29,7 +29,7 @@ Cookie::~Cookie()
 void Cookie::get(QString redirect_uri) 
 {
     QString url = redirect_uri + "&fun=new";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url);
@@ -38,7 +38,7 @@ void Cookie::get(QString redirect_uri)
 void Cookie::getV2(QString redirect_uri)
 {
     QString url = redirect_uri.replace(WX_SERVER_HOST, WX_V2_SERVER_HOST) + "&fun=old";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url);
@@ -47,7 +47,7 @@ void Cookie::getV2(QString redirect_uri)
 QString Cookie::getTicket()
 {
     QSettings cookie(QWXDIR + "/" + COOKIE_FILENAME, QSettings::NativeFormat);
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << cookie.allKeys();
 #endif
     return cookie.value("webwx_data_ticket").toString();
@@ -86,7 +86,7 @@ void Cookie::finished(QNetworkReply* reply)
     QString domain = "";
     QString path = "";
     QString webwxuvid = ""; 
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
 #endif

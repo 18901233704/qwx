@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2015 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include "clipboard.h"
 #include <QApplication>
@@ -9,7 +9,7 @@ Clipboard::Clipboard(QObject *parent)
     : QObject(parent)
     , m_clipboard(QApplication::clipboard())
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << __PRETTY_FUNCTION__;
 #endif
 }

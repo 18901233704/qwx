@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QDir>
@@ -10,14 +10,14 @@ Download::Download(QObject* parent)
   : QObject(parent), 
     m_reply(nullptr)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Download::~Download() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }

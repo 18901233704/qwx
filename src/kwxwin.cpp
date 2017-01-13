@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2009 Ben Cooksley <bcooksley@kde.org>
- * Copyright (C) 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+ * Copyright (C) 2016 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ KwxWin::KwxWin(QWidget *parent)
     // Call this after setDeclarativeEngine to set the i18n global functions, 
     // the runtime platform, etc
     kdeclarative.setupBindings();
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << kdeclarative.translationDomain();
 #endif
     // the view will automatically resize the root item to the size of the view

@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <time.h>
@@ -9,14 +9,14 @@
 SendMsg::SendMsg(HttpPost* parent) 
   : HttpPost(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 SendMsg::~SendMsg() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -72,7 +72,7 @@ void SendMsg::m_post(QString host,
     QString ts = QString::number(time(NULL));
     QString url = host + WX_CGI_PATH + "webwxsendmsg?sid=" + sid 
         + "&skey=" + skey + "&r=" + ts;
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{\"BaseRequest\":{\"Uin\":" + uin + ",\"Sid\":\"" + sid 
@@ -82,7 +82,7 @@ void SendMsg::m_post(QString host,
         + "\",\"Type\":1,\"Content\":\"" + content.replace("\"", "\\\"") 
         + "\",\"ClientMsgId\":" + ts 
         + ",\"LocalID\":" + ts + "}}";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;
 #endif
     HttpPost::post(url, json, true);
@@ -133,7 +133,7 @@ void SendMsg::m_sync(QString host,
     QString ts = QString::number(time(NULL));                                      
     QString url = host + WX_CGI_PATH + "webwxsync?sid=" + sid +          
         "&skey=" + skey + "&r=" + ts;                                              
-#if QWX_DEBUG                                                                      
+#ifndef NDEBUG                                                                      
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;                            
 #endif                                                                             
     QString json = "{\"BaseRequest\":{\"Uin\":" + uin + ",\"Sid\":\"" + sid + 
@@ -143,10 +143,11 @@ void SendMsg::m_sync(QString host,
         if (i != 0)
             json += ",";
         QStringList result = syncKey[i].split("|");
-        json += "{\"Key\":" + result[0] + ",\"Val\":" + result[1] + "}";
+        if (!result.isEmpty())
+            json += "{\"Key\":" + result[0] + ",\"Val\":" + result[1] + "}";
     }
     json += "]},\"rr\":" + ts + "}";                                                 
-#if QWX_DEBUG                                                                  
+#ifndef NDEBUG                                                                  
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;                           
 #endif                                                                             
     HttpPost::post(url, json, true);                                               
@@ -165,7 +166,7 @@ void SendMsg::syncV2(QString uin, QString sid, QString skey, QStringList syncKey
 void SendMsg::finished(QNetworkReply* reply) 
 {
     QString replyStr = QString(reply->readAll());
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
     QFile file("sendmsg.json");

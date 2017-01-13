@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QJsonDocument>                                                           
 #include <QJsonObject>
@@ -9,14 +9,14 @@
 XiaoDouBi::XiaoDouBi(HttpGet* parent) 
   : HttpGet(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 XiaoDouBi::~XiaoDouBi() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -24,7 +24,7 @@ XiaoDouBi::~XiaoDouBi()
 void XiaoDouBi::get(QString word) 
 { 
     QString url = XIAODOUBI_URL + word;
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url); 

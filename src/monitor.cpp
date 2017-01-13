@@ -1,6 +1,6 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
-#if QWX_DEBUG
+#ifndef NDEBUG
 #include <QFile>
 #endif
 #include <time.h>
@@ -11,14 +11,14 @@
 Monitor::Monitor(HttpGet* parent) 
   : HttpGet(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Monitor::~Monitor() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -32,8 +32,8 @@ void Monitor::m_get(QString host,
 {
     QString ts = QString::number(time(NULL));
     QString url = host + WX_CGI_PATH + "synccheck?skey=" + skey + 
-        "&callback=jQuery183084135492448695_1420782130686&r=" + ts + 
-        "&sid=" + sid + "&uin=" + uin + "&deviceid=" + deviceId + 
+        "&callback=jQuery183084135492448695_1420782130686&r=" /* magic number ;-) */ 
+        + ts + "&sid=" + sid + "&uin=" + uin + "&deviceid=" + deviceId + 
         "&synckey=";
     for (int i = 0; i < syncKey.size(); i++) {
         if (i != 0)
@@ -42,7 +42,7 @@ void Monitor::m_get(QString host,
         url += result[0] + "_" + result[1];
     }
     url += "&_=" + ts;
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url, true);
@@ -73,7 +73,7 @@ void Monitor::finished(QNetworkReply* reply)
     if (replyStr == "")
         return;
 
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
     QFile file("synccheck.json"); 

@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2015 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include "logout.h"
 #include "globaldeclarations.h"
@@ -6,7 +6,7 @@
 LogOut::LogOut(HttpGet* parent)
   : HttpGet(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     get();
@@ -14,7 +14,7 @@ LogOut::LogOut(HttpGet* parent)
 
 LogOut::~LogOut()
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -22,7 +22,7 @@ LogOut::~LogOut()
 void LogOut::m_get(QString host)
 {
     QString url = host + WX_CGI_PATH + "webwxlogout";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url);

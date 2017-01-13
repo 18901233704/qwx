@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>
 #include <QFileInfo>
@@ -23,14 +23,14 @@ UploadMedia::UploadMedia(QString filePath,
                          QObject* parent) 
   : QObject(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     if (QFile::exists(filePath)) {
         QString url = FILE_SERVER_HOST + WX_CGI_PATH + "webwxuploadmedia?f=json";
         QMimeDatabase mimeDb;
         QMimeType mimeType = mimeDb.mimeTypeForFile(filePath);
-#if QWX_DEBUG
+#ifndef NDEBUG
         qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << mimeType << mimeType.name();
 #endif
         QString mediaType = mimeType.name().startsWith("image/") ? "pic" : "doc";
@@ -42,7 +42,7 @@ UploadMedia::UploadMedia(QString filePath,
         std::uniform_int_distribution<long long> rand(1615250492, 519062714508114);
         QString clientMediaId = QString::number(rand(eng));
         QString webwxDataTicket = Cookie::getTicket();
-#if QWX_DEBUG
+#ifndef NDEBUG
         qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << lastModifieDateStr 
                  << fileSize << clientMediaId << webwxDataTicket;
 #endif
@@ -53,7 +53,7 @@ UploadMedia::UploadMedia(QString filePath,
 
 UploadMedia::~UploadMedia() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }

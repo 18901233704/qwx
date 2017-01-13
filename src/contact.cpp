@@ -1,8 +1,8 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <KLocalizedString>
 
-#if QWX_DEBUG                                                                      
+#ifndef NDEBUG                                                                      
 #include <QFile>                                                                   
 #endif                                                                             
 #include <QJsonDocument>                                                           
@@ -17,14 +17,14 @@ Contact::Contact(HttpPost* parent)
   : HttpPost(parent), 
     m_v2(false)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Contact::~Contact() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     m_clear();
@@ -47,7 +47,7 @@ void Contact::m_post(QString host)
 
     QString url = host + WX_CGI_PATH + "webwxgetcontact?r=" + 
         QString::number(time(NULL));
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{}";
@@ -61,7 +61,7 @@ void Contact::postV2() { m_v2 = true; m_post(WX_V2_SERVER_HOST); }
 void Contact::finished(QNetworkReply* reply) 
 {
     QString replyStr(reply->readAll());
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
     QFile file("contact.json");                                                 

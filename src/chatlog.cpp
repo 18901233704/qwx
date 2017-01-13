@@ -1,4 +1,4 @@
-// Copyright (C) 2015 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2015 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <QFile>                                                                   
 #include <QDebug>
@@ -9,14 +9,14 @@
 ChatLog::ChatLog(QObject* parent) 
     : QObject(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 ChatLog::~ChatLog() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     clearChatLogList();

@@ -1,6 +1,6 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
-#if QWX_DEBUG
+#ifndef NDEBUG
 #include <QFile>
 #endif
 #include <QJsonDocument>                                                           
@@ -18,7 +18,7 @@ Init::Init(HttpPost* parent)
   : HttpPost(parent),
     m_v2(false)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     std::mt19937 eng(time(NULL));
@@ -29,7 +29,7 @@ Init::Init(HttpPost* parent)
 
 Init::~Init() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     m_clear();
@@ -53,12 +53,12 @@ void Init::post(QString uin, QString sid, QString ticket)
 
     QString url = WX_SERVER_HOST + WX_CGI_PATH + "webwxinit?pass_ticket=" + 
         ticket + "&r=" + QString::number(time(NULL));
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{\"BaseRequest\":{\"Uin\":\"" + uin + "\",\"Sid\":\"" + 
         sid + "\",\"Skey\":\"\",\"DeviceID\":\"" + m_deviceId + "\"}}";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;
 #endif
     HttpPost::post(url, json, true);
@@ -72,12 +72,12 @@ void Init::postV2(QString uin, QString sid, QString ticket)
 
     QString url = WX_V2_SERVER_HOST + WX_CGI_PATH + "webwxinit?pass_ticket=" +
         ticket + "&r=" + QString::number(time(NULL));
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{\"BaseRequest\":{\"Uin\":\"" + uin + "\",\"Sid\":\"" +
         sid + "\",\"Skey\":\"\",\"DeviceID\":\"" + m_deviceId + "\"}}";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;
 #endif
     HttpPost::post(url, json, true);
@@ -91,7 +91,7 @@ QString Init::loginHeadImgUrl() const
 void Init::finished(QNetworkReply* reply) 
 {
     QString replyStr = QString(reply->readAll());
-#if QWX_DEBUG
+#ifndef NDEBUG
     QFile file("init.json"); 
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
@@ -111,7 +111,7 @@ void Init::finished(QNetworkReply* reply)
     QJsonObject user = obj["User"].toObject();
     m_loginUserName = user["UserName"].toString();
     m_loginNickName = user["NickName"].toString();
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << m_loginUserName;
 #endif
     Q_EMIT loginUserNameChanged();
@@ -132,7 +132,7 @@ void Init::finished(QNetworkReply* reply)
     Q_EMIT contactListChanged();
 
     QString skey = obj["SKey"].toString();                                         
-#if QWX_DEBUG                                                                      
+#ifndef NDEBUG                                                                      
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << skey;                           
 #endif 
     QStringList syncKey;

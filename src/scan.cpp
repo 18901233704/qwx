@@ -1,4 +1,4 @@
-// Copyright (C) 2014 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <time.h>
 
@@ -8,14 +8,14 @@
 Scan::Scan(HttpGet* parent) 
   : HttpGet(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 Scan::~Scan() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -24,7 +24,7 @@ void Scan::get(QString uuid, QString tip)
 {
     QString url = LOGIN_SERVER_HOST + WX_CGI_PATH + "login?uuid=" + uuid + 
         "&tip=" + tip + "&_=" + QString::number(time(NULL));
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     HttpGet::get(url);
@@ -37,7 +37,7 @@ void Scan::finished(QNetworkReply* reply)
     QString redirect_uriStr = "";
     int index = -1;
 
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
 #endif
@@ -58,7 +58,7 @@ void Scan::finished(QNetworkReply* reply)
             return;
         }
         redirect_uriStr = replyStr.mid(index, replyStr.size() - index - 2);
-#if QWX_DEBUG
+#ifndef NDEBUG
         qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << redirect_uriStr;
 #endif
         Q_EMIT scanedAndConfirmed(redirect_uriStr);

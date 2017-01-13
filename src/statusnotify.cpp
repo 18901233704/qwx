@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2015 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <time.h>
 
@@ -8,14 +8,14 @@
 StatusNotify::StatusNotify(HttpPost* parent) 
   : HttpPost(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
 
 StatusNotify::~StatusNotify() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
 }
@@ -29,14 +29,14 @@ void StatusNotify::m_post(QString host,
 {
     QString ts = QString::number(time(NULL));
     QString url = host + WX_CGI_PATH + "webwxstatusnotify?skey=" + skey + "&r=" + ts;
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{\"BaseRequest\":{\"Uin\":" + uin + ",\"Sid\":\"" + sid 
         + "\",\"Skey\":\"\",\"DeviceID\":\"" + deviceId + "\"},\"Code\":3,"
         "\"FromUserName\":\"" + userName + "\",\"ToUserName\":\"" + userName 
         + "\",\"ClientMsgId\":\"" + ts + "\"}";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;
 #endif
     HttpPost::post(url, json, true);
@@ -63,7 +63,7 @@ void StatusNotify::postV2(QString uin,
 void StatusNotify::finished(QNetworkReply* reply) 
 {
     QString replyStr = QString(reply->readAll());
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
     qDebug() << "DEBUG:" << replyStr;
 #endif

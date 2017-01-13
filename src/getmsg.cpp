@@ -1,4 +1,4 @@
-// Copyright (C) 2014 - 2016 Leslie Zhai <xiang.zhai@i-soft.com.cn>
+// Copyright (C) 2014 - 2017 Leslie Zhai <xiang.zhai@i-soft.com.cn>
 
 #include <KLocalizedString>
 
@@ -19,7 +19,7 @@
 GetMsg::GetMsg(HttpPost* parent) 
     : HttpPost(parent)
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     m_contact = new Contact;
@@ -28,7 +28,7 @@ GetMsg::GetMsg(HttpPost* parent)
 
 GetMsg::~GetMsg() 
 {
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__;
 #endif
     delete m_contact;
@@ -113,7 +113,7 @@ void GetMsg::postHandler(QString host,
     QString ts = QString::number(time(NULL));
     QString url = host + WX_CGI_PATH + "webwxsync?sid=" + sid + 
         "&skey=" + m_skey + "&r=" + ts;
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << url;
 #endif
     QString json = "{\"BaseRequest\":{\"Uin\":" + uin + ",\"Sid\":\"" + sid + 
@@ -123,10 +123,11 @@ void GetMsg::postHandler(QString host,
         if (i != 0)
             json += ",";
         QStringList result = syncKey[i].split("|");
-        json += "{\"Key\":" + result[0] + ",\"Val\":" + result[1] + "}";
+        if (!result.isEmpty())
+            json += "{\"Key\":" + result[0] + ",\"Val\":" + result[1] + "}";
     }
     json += "]},\"rr\":" + ts + "}";
-#if QWX_DEBUG
+#ifndef NDEBUG
     qDebug() << "DEBUG:" << __PRETTY_FUNCTION__ << json;
 #endif
     HttpPost::post(url, json, true);
@@ -199,7 +200,7 @@ void GetMsg::handleNewMsg(QString msgId,
         }
     }
 
-    if (m_map.size() > 64) {
+    if (m_map.size() > 64) { // magic number...
         while (m_map.size() > 64 / 2)
             m_map.erase(m_map.begin());
     }
@@ -210,7 +211,7 @@ void GetMsg::handleNewMsg(QString msgId,
 void GetMsg::finished(QNetworkReply* reply) 
 {
     QString replyStr = QString(reply->readAll());
-#if QWX_DEBUG
+#ifndef NDEBUG
     QFile file("getmsg.json");
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&file);
@@ -246,7 +247,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 downLoad->get(url, msgImgPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
                     QString content = "<img src=\"file://" + msgImgPath +
-                        "\" width=\"128\" height=\"128\">";
+                        "\" width=\"" + TN_WIDTH + "\" height=\"" + TN_HEIGHT + "\">";
                     handleNewMsg(msgId, content, fromUserNameStr,
                         toUserNameStr, time(nullptr));
                     downLoad->deleteLater();
@@ -269,7 +270,7 @@ void GetMsg::finished(QNetworkReply* reply)
                 QString url = m_v2 ? WX_V2_SERVER_HOST : WX_SERVER_HOST +
                     WX_CGI_PATH + "webwxgetvideo?msgid=" + msgId + "&skey=" +
                     m_skey;
-                QString msgVideoPath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation) + "/video_" + msgId + ".mp4";
+                QString msgVideoPath = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation) + "/video_" + msgId + VIDEO_FMT_SUF;
                 Download *downLoad = new Download;
                 downLoad->get(url, msgVideoPath, true, false);
                 connect(downLoad, &Download::finished, [=] {
