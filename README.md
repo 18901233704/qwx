@@ -1,13 +1,10 @@
-kwx
----
+# kwx
 
-WeChat KDE frontend using KF5
-微信 KDE 前端，使用[KF5](https://en.wikipedia.org/wiki/KDE_Frameworks_5)，基于[网页微信协议](https://github.com/Urinx/WeixinBot/blob/master/README.md)
+WeChat KDE frontend using KF5 base on [webwx protocol](https://github.com/Urinx/WeixinBot/blob/master/README.md).
 
-images and protocol ***Copyright (C) by [Tencent](http://weixin.qq.com/)*** 
-图片、协议***版权归[腾讯](http://weixin.qq.com/) 所有！***
+Images and protocol ***Copyright (C) by [Tencent](http://weixin.qq.com/)***! 
 
-## Build && Install 编译、运行
+## Build && Debug
 
 ### Dependences for ArchLinux
 
@@ -36,4 +33,3 @@ make -j4
 lldb ./src/kwx 
 r
 ```
-
