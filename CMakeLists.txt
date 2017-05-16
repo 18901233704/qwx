@@ -18,8 +18,8 @@ include(ECMEnableSanitizers)
 set(KF5_DEP_VERSION "5.24.0")
 set(REQUIRED_QT_VERSION "5.7.0")
 
-# Definitions
-add_definitions(-fpermissive)
+# GCC 5.2 not enable C++11 by default
+add_definitions(-std=c++11)
 
 # Default build type
 if(NOT CMAKE_BUILD_TYPE)
