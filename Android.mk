@@ -1,6 +1,6 @@
 APP := hello
 ROOT := /data/download
-INSTALL_DIR := /home/xiangzhai/tmp
+INSTALL_DIR := /data/local/tmp
 #NDK_PLATFORM_VER := 19 # 4.4.2
 NDK_PLATFORM_VER := 22
 
