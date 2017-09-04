@@ -1,9 +1,10 @@
 APP := hello
 ROOT := /data/download
-INSTALL_DIR := /data/local/tmp
-NDK_PLATFORM_VER := 19
+INSTALL_DIR := /home/xiangzhai/tmp
+#NDK_PLATFORM_VER := 19 # 4.4.2
+NDK_PLATFORM_VER := 22
 
-ANDROID_NDK_ROOT := $(ROOT)/android-ndk-r12b
+ANDROID_NDK_ROOT := $(ROOT)/android-ndk-r14b
 ANDROID_NDK_HOST := linux-x86_64
 ANDROID_SDK_ROOT := $(ROOT)/android-sdk-linux
 PREBUILD := $(ANDROID_NDK_ROOT)/toolchains/arm-linux-androideabi-4.9/prebuilt/$(ANDROID_NDK_HOST)
