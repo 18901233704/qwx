@@ -16,7 +16,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMEnableSanitizers)
 
 set(KF5_DEP_VERSION "5.24.0")
-set(REQUIRED_QT_VERSION "5.7.0")
+set(REQUIRED_QT_VERSION "5.6.0")
 
 # GCC 5.2 not enable C++11 by default
 add_definitions(-std=c++11)
