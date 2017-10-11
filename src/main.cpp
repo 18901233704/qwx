@@ -9,7 +9,7 @@
 #include <QCommandLineParser>
 #include <QDebug>
 
-#ifdef __clang__
+#if defined(__clang__) && defined(LLVM_MAJOR) && (LLVM_MAJOR > 5)
 #include <sanitizer/common_interface_defs.h>
 #endif
 
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     window->show();
     app.setMainWindow(window);
 
-#ifdef __clang__
+#if defined(__clang__) && defined(LLVM_MAJOR) && (LLVM_MAJOR > 5)
     if (argc > 2)
         __sanitizer_print_memory_profile(atoi(argv[1]), atoi(argv[2]));
 #endif
